@@ -29,16 +29,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* ИСПОЛЬЗУЕМ ДИНАМИЧЕСКУЮ ВЫСОТУ ДЛЯ ТЕЛЕФОНОВ (100dvh) */
+            height: 100vh;
             height: 100dvh;
-            overflow: hidden; /* Блокируем скролл всей страницы */
+            overflow: hidden; 
             color: var(--dark-navy);
         }
 
         #app {
             width: 100%;
             max-width: 460px;
-            height: 100dvh;
+            height: 100%;
             background-color: var(--cream);
             display: flex;
             flex-direction: column;
@@ -159,9 +159,8 @@
             flex: 1;
             display: none;
             flex-direction: column;
+            position: relative;
             overflow: hidden;
-            /* ФИКС ОБРЕЗКИ: не дает чату выталкивать меню вниз */
-            min-height: 0; 
         }
 
         .view-section.active {
@@ -176,6 +175,7 @@
             background-color: rgba(108, 163, 162, 0.15);
             border-bottom: 1px solid rgba(48, 112, 130, 0.15);
             scrollbar-width: none;
+            z-index: 5;
         }
         .quick-chips::-webkit-scrollbar { display: none; }
 
@@ -199,9 +199,10 @@
             border-color: var(--deep-teal);
         }
 
+        /* ФИКС ЧАТА: добавили отступ снизу, чтобы меню не перекрывало текст */
         #chat-window {
             flex: 1;
-            padding: 16px;
+            padding: 16px 16px 100px 16px; 
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -255,212 +256,38 @@
             font-weight: 600;
         }
 
-        .walk-summary {
-            background: linear-gradient(135deg, var(--dark-navy), var(--deep-teal));
-            color: var(--cream);
-            padding: 10px 12px;
-            border-radius: 12px;
-            margin: 10px 0;
-            font-size: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .walk-summary-title {
-            color: var(--orange);
-            font-weight: 800;
-            font-size: 13px;
-        }
-
-        .cards-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .place-card {
-            background-color: var(--cream);
-            border-radius: 14px;
-            padding: 12px;
-            border-left: 5px solid var(--deep-teal);
-            position: relative;
-            transition: transform 0.15s;
-        }
-
-        .place-card.sponsor {
-            border-left-color: var(--orange);
-            background: linear-gradient(to right, #fff8ef, var(--cream));
-        }
-
-        .badge-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .cat-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--deep-teal);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .sponsor-badge {
-            background-color: var(--orange);
-            color: var(--dark-navy);
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .step-badge {
-            background-color: var(--dark-navy);
-            color: var(--orange);
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .place-name {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--dark-navy);
-            margin-bottom: 4px;
-        }
-
-        .place-metrics {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 6px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .place-metrics span.total-price {
-            color: var(--deep-teal);
-        }
-
-        .tags-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 8px;
-        }
-
-        .tag {
-            background-color: var(--muted-teal);
-            color: var(--white);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 8px;
-        }
-
-        .place-addr {
-            font-size: 12px;
-            color: #4a5c6a;
-            margin-bottom: 8px;
-        }
-
-        .ai-reason {
-            font-size: 11.5px;
-            background-color: rgba(255,255,255,0.7);
-            padding: 6px 8px;
-            border-radius: 8px;
-            color: var(--dark-navy);
-            margin-bottom: 8px;
-            border-left: 2px solid var(--orange);
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .btn-book, .btn-route {
-            flex: 1;
-            border: none;
-            padding: 8px 10px;
-            border-radius: 9px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.2s;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-book {
-            background-color: var(--orange);
-            color: var(--dark-navy);
-        }
-
-        .btn-route {
-            background-color: var(--muted-teal);
-            color: var(--white);
-        }
-
-        .btn-book:hover, .btn-route:hover {
-            filter: brightness(1.05);
-        }
-
-        .btn-share-poll {
-            margin-top: 10px;
-            width: 100%;
-            background-color: var(--deep-teal);
-            color: var(--white);
-            border: none;
-            padding: 9px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        /* НОВЫЙ ДИЗАЙН ПАРЯЩЕЙ ПАНЕЛИ ВВОДА (ОРГАНИЧНЫЙ) */
+        /* ФИКС МЕНЮ: Абсолютное позиционирование поверх чата */
         .input-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
             display: flex;
-            padding: 10px 16px 26px; /* Отступ снизу для "Safe Area" на телефонах */
-            background: linear-gradient(to top, var(--cream) 70%, rgba(236, 231, 220, 0)); /* Плавное растворение фона */
+            padding: 14px 16px 24px;
+            background: linear-gradient(to top, var(--cream) 75%, rgba(236, 231, 220, 0));
             gap: 10px;
             align-items: center;
-            border-top: none;
-            position: relative;
-            z-index: 10;
+            z-index: 100;
+            pointer-events: none; /* Пропускает клики сквозь прозрачный градиент */
         }
 
         #chat-input {
             flex: 1;
             padding: 14px 20px;
             border: none;
-            border-radius: 26px; /* Форма капсулы */
+            border-radius: 26px;
             background-color: var(--white);
             color: var(--dark-navy);
             font-size: 14.5px;
             font-weight: 600;
             outline: none;
-            box-shadow: 0 6px 16px rgba(18, 33, 46, 0.07); /* Мягкая парящая тень */
+            box-shadow: 0 8px 20px rgba(18, 33, 46, 0.12);
+            pointer-events: auto; /* Возвращает кликабельность полю ввода */
             transition: box-shadow 0.3s;
         }
 
         #chat-input:focus {
-            box-shadow: 0 8px 24px rgba(48, 112, 130, 0.15); /* Подсветка при клике */
+            box-shadow: 0 8px 24px rgba(48, 112, 130, 0.2);
         }
 
         #send-btn {
@@ -477,138 +304,82 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 6px 14px rgba(234, 153, 64, 0.35); /* Цветная тень кнопки */
+            box-shadow: 0 8px 18px rgba(234, 153, 64, 0.4);
+            pointer-events: auto; /* Возвращает кликабельность кнопке */
             transition: transform 0.2s;
         }
 
         #send-btn:active {
-            transform: scale(0.92); /* Анимация нажатия */
+            transform: scale(0.92);
         }
 
-        .tours-container, .catalog-container {
-            padding: 16px;
-            overflow-y: auto;
-            flex: 1;
+        /* Карточки и каталог */
+        .walk-summary {
+            background: linear-gradient(135deg, var(--dark-navy), var(--deep-teal));
+            color: var(--cream);
+            padding: 10px 12px;
+            border-radius: 12px;
+            margin: 10px 0;
+            font-size: 12px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 4px;
         }
 
-        .tour-preset-card {
-            background-color: var(--white);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: var(--card-shadow);
-            border-top: 4px solid var(--orange);
-        }
+        .walk-summary-title { color: var(--orange); font-weight: 800; font-size: 13px; }
 
-        .tour-preset-card h3 {
-            font-size: 17px;
-            margin-bottom: 6px;
-            color: var(--dark-navy);
-        }
+        .cards-list { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
 
-        .tour-preset-card p {
-            font-size: 13px;
-            color: #4a5c6a;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            flex-shrink: 0;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            inset: 0;
-            background-color: rgba(18, 33, 46, 0.75);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 100;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
+        .place-card {
             background-color: var(--cream);
-            width: 100%;
-            max-width: 360px;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            border: 2px solid var(--orange);
+            border-radius: 14px;
+            padding: 12px;
+            border-left: 5px solid var(--deep-teal);
+            position: relative;
         }
 
-        .modal-title {
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: var(--dark-navy);
+        .place-card.sponsor {
+            border-left-color: var(--orange);
+            background: linear-gradient(to right, #fff8ef, var(--cream));
         }
 
-        .modal-sub {
-            font-size: 13px;
-            color: var(--deep-teal);
-            font-weight: 700;
-            margin-bottom: 14px;
-        }
+        .badge-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .cat-label { font-size: 11px; font-weight: 800; color: var(--deep-teal); text-transform: uppercase; }
+        .sponsor-badge, .step-badge { background-color: var(--orange); color: var(--dark-navy); font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 6px; }
+        .step-badge { background-color: var(--dark-navy); color: var(--orange); }
+        .place-name { font-size: 16px; font-weight: 800; color: var(--dark-navy); margin-bottom: 4px; }
+        .place-metrics { font-size: 13px; font-weight: 700; color: var(--dark-navy); margin-bottom: 6px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .place-metrics span.total-price { color: var(--deep-teal); }
+        .tags-wrap { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+        .tag { background-color: var(--muted-teal); color: var(--white); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 8px; }
+        .place-addr { font-size: 12px; color: #4a5c6a; margin-bottom: 8px; }
+        .ai-reason { font-size: 11.5px; background-color: rgba(255,255,255,0.7); padding: 6px 8px; border-radius: 8px; color: var(--dark-navy); margin-bottom: 8px; border-left: 2px solid var(--orange); }
 
-        .form-group {
-            margin-bottom: 12px;
-        }
+        .card-actions { display: flex; gap: 6px; margin-top: 8px; }
+        .btn-book, .btn-route { flex: 1; border: none; padding: 8px 10px; border-radius: 9px; font-size: 11px; font-weight: 800; cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        .btn-book { background-color: var(--orange); color: var(--dark-navy); }
+        .btn-route { background-color: var(--muted-teal); color: var(--white); }
+        .btn-book:hover, .btn-route:hover { filter: brightness(1.05); }
 
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+        .btn-share-poll { margin-top: 10px; width: 100%; background-color: var(--deep-teal); color: var(--white); border: none; padding: 9px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
 
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1.5px solid var(--muted-teal);
-            background-color: var(--white);
-            font-size: 14px;
-            font-weight: 600;
-        }
+        .tours-container, .catalog-container { padding: 16px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+        .tour-preset-card { background-color: var(--white); border-radius: 16px; padding: 16px; box-shadow: var(--card-shadow); border-top: 4px solid var(--orange); }
+        .tour-preset-card h3 { font-size: 17px; margin-bottom: 6px; color: var(--dark-navy); }
+        .tour-preset-card p { font-size: 13px; color: #4a5c6a; margin-bottom: 12px; line-height: 1.4; }
+        .filter-bar { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; flex-shrink: 0; }
 
-        .modal-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .btn-cancel {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1.5px solid var(--dark-navy);
-            background: transparent;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .btn-confirm {
-            flex: 1.5;
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            background-color: var(--orange);
-            color: var(--dark-navy);
-            font-weight: 800;
-            cursor: pointer;
-        }
+        .modal-overlay { position: absolute; inset: 0; background-color: rgba(18, 33, 46, 0.75); display: none; justify-content: center; align-items: center; padding: 20px; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background-color: var(--cream); width: 100%; max-width: 360px; border-radius: 20px; padding: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.4); border: 2px solid var(--orange); }
+        .modal-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: var(--dark-navy); }
+        .modal-sub { font-size: 13px; color: var(--deep-teal); font-weight: 700; margin-bottom: 14px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1.5px solid var(--muted-teal); background-color: var(--white); font-size: 14px; font-weight: 600; }
+        .modal-actions { display: flex; gap: 8px; margin-top: 16px; }
+        .btn-cancel { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid var(--dark-navy); background: transparent; font-weight: 700; cursor: pointer; }
+        .btn-confirm { flex: 1.5; padding: 10px; border-radius: 10px; border: none; background-color: var(--orange); color: var(--dark-navy); font-weight: 800; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -617,13 +388,10 @@
     <symbol id="vibewalk-wolf" viewBox="0 0 120 120">
         <defs>
             <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#195363"/>
-                <stop offset="100%" stop-color="#307082"/>
+                <stop offset="0%" stop-color="#195363"/><stop offset="100%" stop-color="#307082"/>
             </linearGradient>
             <linearGradient id="wolfGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#EA9940"/>
-                <stop offset="55%" stop-color="#f3be7a"/>
-                <stop offset="100%" stop-color="#ECE7DC"/>
+                <stop offset="0%" stop-color="#EA9940"/><stop offset="55%" stop-color="#f3be7a"/><stop offset="100%" stop-color="#ECE7DC"/>
             </linearGradient>
         </defs>
         <rect width="120" height="120" rx="26" fill="url(#skyGrad)"/>
@@ -665,18 +433,18 @@
         <div class="nav-tabs">
             <button class="nav-tab active" onclick="switchTab('chat', this)">💬 ИИ-Подбор</button>
             <button class="nav-tab" onclick="switchTab('tours', this)">🗺️ Маршруты</button>
-            <button class="nav-tab" onclick="switchTab('catalog', this)">📚 База (75)</button>
+            <button class="nav-tab" id="tab-catalog" onclick="switchTab('catalog', this)">📚 База (150)</button>
         </div>
     </header>
 
     <div id="view-chat" class="view-section active">
         <div class="quick-chips">
-            <button class="chip" onclick="quickAsk('Нас трое, хотим посидеть в необычном месте, общий бюджет до 4500 рублей')">✨ Необычное место</button>
+            <button class="chip" onclick="quickAsk('Нас трое, посидеть в необычном месте, бюджет 4500 руб')">✨ Необычное место</button>
             <button class="chip" onclick="buildThematicRoute('Гастротур')">🍽️ Собрать Гастротур</button>
             <button class="chip" onclick="buildThematicRoute('Романтический вечер')">❤️ Свидание (Маршрут)</button>
-            <button class="chip" onclick="quickAsk('Хотим недорого выпить кофе и десерты до 700 рублей в тихом месте')">☕ Уютная кофейня</button>
+            <button class="chip" onclick="quickAsk('Где недорого выпить кофе до 700 рублей?')">☕ Уютная кофейня</button>
             <button class="chip" onclick="buildThematicRoute('Барный маршрут')">🍹 Барный тур</button>
-            <button class="chip" onclick="quickAsk('Куда сходить компанией на квест или активный отдых?')">🎲 Активный отдых</button>
+            <button class="chip" onclick="quickAsk('Сходить компанией на квест или активный отдых')">🎲 Активный отдых</button>
         </div>
 
         <div id="chat-window">
@@ -684,13 +452,13 @@
                 <svg class="bot-avatar"><use href="#vibewalk-wolf"></use></svg>
                 <div class="bubble bot">
                     Привет! Я <b>Волчок</b> — твой ИИ-проводник по Ростову-на-Дону 🐾<br><br>
-                    Опиши в свободной форме, как хочешь провести время: укажи <b>компанию, бюджет, кухню или настроение</b>. Я мгновенно проанализирую 75 локаций города, посчитаю бюджет прогулки или соберу готовый маршрут!
+                    Опиши, как хочешь провести время: укажи <b>компанию, бюджет, кухню или настроение</b>. Я мгновенно проанализирую 150 локаций города и подберу идеальный маршрут!
                 </div>
             </div>
         </div>
 
         <div class="input-bar">
-            <input type="text" id="chat-input" placeholder="Введите ваш запрос..." onkeypress="if(event.key==='Enter') sendUserMessage()">
+            <input type="text" id="chat-input" placeholder="Ваш запрос (напр: уютное место)..." onkeypress="if(event.key==='Enter') sendUserMessage()">
             <button id="send-btn" onclick="sendUserMessage()">➤</button>
         </div>
     </div>
@@ -699,23 +467,23 @@
         <div class="tours-container">
             <div class="tour-preset-card">
                 <h3>🍽️ Гастрономический тур</h3>
-                <p>Последовательный маршрут из 3 заведений: утренний или дневной кофе с десертом, колоритный ужин в ресторане и завершение вечера в атмосферном коктейльном баре.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Гастротур');">Сгенерировать маршрут с ИИ</button>
+                <p>Последовательный маршрут из 3 заведений: утренний кофе, колоритный ужин в ресторане и коктейльный бар.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Гастротур');">Сгенерировать с ИИ</button>
             </div>
             <div class="tour-preset-card">
                 <h3>❤️ Романтический вечер</h3>
-                <p>Идеальный сценарий для свидания: прогулка или необычное арт-пространство, ужин с панорамным видом и вином, а также тихая кофейня.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Романтический вечер');">Сгенерировать маршрут с ИИ</button>
+                <p>Сценарий для свидания: прогулка или арт-пространство, ужин с панорамным видом и тихая кофейня.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Романтический вечер');">Сгенерировать с ИИ</button>
             </div>
             <div class="tour-preset-card">
                 <h3>🍹 Барный маршрут</h3>
-                <p>Насыщенный вечер для компании друзей: старт в крафтовом пабе, перемещение в коктейльный бар на Садовой и финал с музыкой и танцами.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Барный маршрут');">Сгенерировать маршрут с ИИ</button>
+                <p>Насыщенный вечер для друзей: старт в пабе, перемещение в бар на Садовой и финал с танцами.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Барный маршрут');">Сгенерировать с ИИ</button>
             </div>
             <div class="tour-preset-card">
                 <h3>🎭 Культурный вечер</h3>
-                <p>Сочетание развлекательных и культурных локаций Ростова с уютными гастрономическими местами поблизости.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Культурный вечер');">Сгенерировать маршрут с ИИ</button>
+                <p>Сочетание развлекательных и культурных локаций Ростова с гастрономическими местами поблизости.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Культурный вечер');">Сгенерировать с ИИ</button>
             </div>
         </div>
     </div>
@@ -723,12 +491,12 @@
     <div id="view-catalog" class="view-section">
         <div class="catalog-container">
             <div class="filter-bar">
-                <button class="chip" onclick="renderCatalog('Все')">Все (75)</button>
-                <button class="chip" onclick="renderCatalog('Кафе/Кофейня')">Кафе (15)</button>
-                <button class="chip" onclick="renderCatalog('Ресторан')">Рестораны (22)</button>
-                <button class="chip" onclick="renderCatalog('Бар')">Бары (13)</button>
-                <button class="chip" onclick="renderCatalog('Развлечения')">Развлечения (13)</button>
-                <button class="chip" onclick="renderCatalog('Необычные места')">Необычные (12)</button>
+                <button class="chip" onclick="renderCatalog('Все')">Все (150)</button>
+                <button class="chip" onclick="renderCatalog('Кафе/Кофейня')">Кафе</button>
+                <button class="chip" onclick="renderCatalog('Ресторан')">Рестораны</button>
+                <button class="chip" onclick="renderCatalog('Бар')">Бары</button>
+                <button class="chip" onclick="renderCatalog('Развлечения')">Развлечения</button>
+                <button class="chip" onclick="renderCatalog('Необычные места')">Необычные</button>
             </div>
             <div id="catalog-list" class="cards-list"></div>
         </div>
@@ -764,786 +532,354 @@
 </div>
 
 <script>
-    const placesDB = [
-        {"name": "Сметана", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.4, "tags": ["уютно", "десерты", "тихо"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 97"},
-        {"name": "Питькофе", "category": "Кафе/Кофейня", "budget_per_person": 500, "rating": 4.2, "tags": ["завтрак", "работа", "быстро"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 96"},
-        {"name": "Золотой Колос", "category": "Кафе/Кофейня", "budget_per_person": 1000, "rating": 4.1, "tags": ["кофе", "завтрак", "десерты"], "address": "г. Ростов-на-Дону, ул. Соколова, 125"},
-        {"name": "Кекс", "category": "Кафе/Кофейня", "budget_per_person": 600, "rating": 4.4, "tags": ["завтрак", "кофе", "десерты"], "address": "г. Ростов-на-Дону, ул. Буденновский, 87"},
-        {"name": "Правда", "category": "Кафе/Кофейня", "budget_per_person": 900, "rating": 4.4, "tags": ["быстро", "тихо", "десерты"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 114"},
-        {"name": "Setters", "category": "Кафе/Кофейня", "budget_per_person": 300, "rating": 4.6, "tags": ["десерты", "быстро", "завтрак"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 105"},
-        {"name": "Авокадо", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.1, "tags": ["быстро", "завтрак", "работа"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 5"},
-        {"name": "Бутерброд", "category": "Кафе/<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VibeWalk — ИИ-проводник по Ростову-на-Дону</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --dark-navy: #12212E;
-            --deep-teal: #307082;
-            --muted-teal: #6CA3A2;
-            --cream: #ECE7DC;
-            --orange: #EA9940;
-            --white: #FFFFFF;
-            --card-shadow: 0 6px 18px rgba(18, 33, 46, 0.08);
-        }
+    // Базовая коллекция мест (75 шт)
+    const baseDB = [
+        {"name": "Сметана", "category": "Кафе/Кофейня", "budget": 800, "rating": 4.4, "tags": ["уютно", "десерты", "тихо"], "addr": "ул. Ворошиловский, 97"},
+        {"name": "Питькофе", "category": "Кафе/Кофейня", "budget": 500, "rating": 4.2, "tags": ["завтрак", "работа", "быстро"], "addr": "ул. Ворошиловский, 96"},
+        {"name": "Золотой Колос", "category": "Кафе/Кофейня", "budget": 1000, "rating": 4.1, "tags": ["кофе", "завтрак", "десерты"], "addr": "ул. Соколова, 125"},
+        {"name": "Кекс", "category": "Кафе/Кофейня", "budget": 600, "rating": 4.4, "tags": ["завтрак", "кофе", "десерты"], "addr": "ул. Буденновский, 87"},
+        {"name": "Правда", "category": "Кафе/Кофейня", "budget": 900, "rating": 4.4, "tags": ["быстро", "тихо", "десерты"], "addr": "ул. Красноармейская, 114"},
+        {"name": "Setters", "category": "Кафе/Кофейня", "budget": 300, "rating": 4.6, "tags": ["десерты", "быстро", "завтрак"], "addr": "ул. Красноармейская, 105"},
+        {"name": "Авокадо", "category": "Кафе/Кофейня", "budget": 800, "rating": 4.1, "tags": ["быстро", "завтрак", "работа"], "addr": "ул. Пушкинская, 5"},
+        {"name": "Бутерброд", "category": "Кафе/Кофейня", "budget": 600, "rating": 4.4, "tags": ["тихо", "десерты", "быстро"], "addr": "ул. Максима Горького, 72"},
+        {"name": "Surf Coffee", "category": "Кафе/Кофейня", "budget": 300, "rating": 4.1, "tags": ["работа", "быстро", "десерты"], "addr": "ул. Соколова, 62"},
+        {"name": "CUP by CUP", "category": "Кафе/Кофейня", "budget": 700, "rating": 4.4, "tags": ["уютно", "тихо", "быстро"], "addr": "ул. Большая Садовая, 7"},
+        {"name": "Кофе и Люди", "category": "Кафе/Кофейня", "budget": 1000, "rating": 4.3, "tags": ["быстро", "уютно", "работа"], "addr": "ул. Пушкинская, 130"},
+        {"name": "Кофеман", "category": "Кафе/Кофейня", "budget": 500, "rating": 4.5, "tags": ["работа", "завтрак", "десерты"], "addr": "ул. Красноармейская, 122"},
+        {"name": "Гаврош", "category": "Кафе/Кофейня", "budget": 700, "rating": 4.6, "tags": ["кофе", "десерты", "работа"], "addr": "ул. Буденновский, 56"},
+        {"name": "Keks", "category": "Кафе/Кофейня", "budget": 800, "rating": 4.8, "tags": ["завтрак", "тихо", "десерты"], "addr": "ул. Буденновский, 122"},
+        {"name": "Goodman", "category": "Кафе/Кофейня", "budget": 600, "rating": 4.2, "tags": ["десерты", "кофе", "быстро"], "addr": "ул. Пушкинская, 111"},
+        {"name": "Ош Пош", "category": "Ресторан", "budget": 4500, "rating": 4.1, "tags": ["мясо", "ужин", "вкусно"], "addr": "ул. Пушкинская, 89"},
+        {"name": "Leo Wine & Kitchen", "category": "Ресторан", "budget": 1300, "rating": 4.8, "tags": ["свидание", "ужин", "вкусно"], "addr": "ул. Суворова, 18"},
+        {"name": "Магадан", "category": "Ресторан", "budget": 3600, "rating": 4.9, "tags": ["мясо", "вино", "панорама"], "addr": "ул. Красноармейская, 53"},
+        {"name": "ОнегинДача", "category": "Ресторан", "budget": 2300, "rating": 4.2, "tags": ["вино", "дорого", "ужин"], "addr": "ул. Суворова, 47"},
+        {"name": "LUKA PIZZA", "category": "Ресторан", "budget": 3400, "rating": 4.2, "tags": ["ужин", "мясо", "дорого"], "addr": "ул. Буденновский, 57"},
+        {"name": "Сицилия", "category": "Ресторан", "budget": 2400, "rating": 4.0, "tags": ["ужин", "вино", "вкусно"], "addr": "ул. Максима Горького, 20"},
+        {"name": "Ялла", "category": "Ресторан", "budget": 4400, "rating": 4.4, "tags": ["компания", "свидание", "вино"], "addr": "ул. Большая Садовая, 42"},
+        {"name": "Пирс", "category": "Ресторан", "budget": 5000, "rating": 4.3, "tags": ["компания", "вкусно", "свидание"], "addr": "ул. Суворова, 46"},
+        {"name": "New York", "category": "Ресторан", "budget": 4600, "rating": 5.0, "tags": ["ужин", "компания", "дорого"], "addr": "ул. Большая Садовая, 87"},
+        {"name": "Высота 56", "category": "Ресторан", "budget": 1800, "rating": 4.6, "tags": ["вино", "ужин", "дорого"], "addr": "ул. Соколова, 17"},
+        {"name": "Эрти", "category": "Ресторан", "budget": 2500, "rating": 4.6, "tags": ["панорама", "дорого", "компания"], "addr": "ул. Красноармейская, 57"},
+        {"name": "Беллуччи", "category": "Ресторан", "budget": 1000, "rating": 4.7, "tags": ["вино", "ужин", "панорама"], "addr": "ул. Красноармейская, 139"},
+        {"name": "Joy", "category": "Ресторан", "budget": 4300, "rating": 4.2, "tags": ["свидание", "мясо", "вино"], "addr": "ул. Красноармейская, 112"},
+        {"name": "Schneider", "category": "Ресторан", "budget": 3500, "rating": 4.1, "tags": ["ужин", "панорама", "мясо"], "addr": "ул. Ворошиловский, 125"},
+        {"name": "Макао", "category": "Ресторан", "budget": 1700, "rating": 4.2, "tags": ["панорама", "ужин", "мясо"], "addr": "ул. Большая Садовая, 25"},
+        {"name": "Матадор", "category": "Ресторан", "budget": 2500, "rating": 4.1, "tags": ["свидание", "панорама", "мясо"], "addr": "ул. Красноармейская, 101"},
+        {"name": "Кинза", "category": "Ресторан", "budget": 4300, "rating": 4.0, "tags": ["вино", "панорама", "дорого"], "addr": "ул. Суворова, 56"},
+        {"name": "Пинта", "category": "Ресторан", "budget": 2200, "rating": 4.3, "tags": ["дорого", "свидание", "ужин"], "addr": "ул. Большая Садовая, 100"},
+        {"name": "Гридневъ", "category": "Ресторан", "budget": 2600, "rating": 4.3, "tags": ["дорого", "вино", "вкусно"], "addr": "ул. Суворова, 127"},
+        {"name": "Рис", "category": "Ресторан", "budget": 4200, "rating": 4.3, "tags": ["панорама", "мясо", "вино"], "addr": "ул. Красноармейская, 146"},
+        {"name": "Тамада", "category": "Ресторан", "budget": 3400, "rating": 4.6, "tags": ["панорама", "вино", "мясо"], "addr": "ул. Соколова, 150"},
+        {"name": "Казачий Курень", "category": "Ресторан", "budget": 1500, "rating": 4.5, "tags": ["панорама", "мясо", "вино"], "addr": "ул. Пушкинская, 90"},
+        {"name": "Голодранец", "category": "Бар", "budget": 2800, "rating": 4.6, "tags": ["коктейли", "вечер", "крафт"], "addr": "ул. Ворошиловский, 55"},
+        {"name": "Бокальчик", "category": "Бар", "budget": 1700, "rating": 4.3, "tags": ["вечеринка", "коктейли", "алкоголь"], "addr": "ул. Максима Горького, 38"},
+        {"name": "Сияние", "category": "Бар", "budget": 2100, "rating": 4.1, "tags": ["вечеринка", "коктейли", "танцы"], "addr": "ул. Ворошиловский, 116"},
+        {"name": "Shanghai 12", "category": "Бар", "budget": 1400, "rating": 4.3, "tags": ["алкоголь", "музыка", "коктейли"], "addr": "ул. Большая Садовая, 104"},
+        {"name": "Молодость", "category": "Бар", "budget": 2600, "rating": 4.8, "tags": ["коктейли", "танцы", "алкоголь"], "addr": "ул. Большая Садовая, 107"},
+        {"name": "Квадрат", "category": "Бар", "budget": 1500, "rating": 4.8, "tags": ["танцы", "коктейли", "музыка"], "addr": "ул. Соколова, 81"},
+        {"name": "Свое Место", "category": "Бар", "budget": 2400, "rating": 4.5, "tags": ["крафт", "шумно", "вечер"], "addr": "ул. Соколова, 48"},
+        {"name": "O.W. Grant", "category": "Бар", "budget": 2500, "rating": 4.8, "tags": ["алкоголь", "коктейли", "вечер"], "addr": "ул. Большая Садовая, 140"},
+        {"name": "Буковски", "category": "Бар", "budget": 800, "rating": 4.2, "tags": ["музыка", "танцы", "вечеринка"], "addr": "ул. Большая Садовая, 51"},
+        {"name": "Abbey Road", "category": "Бар", "budget": 2200, "rating": 4.9, "tags": ["коктейли", "шумно", "крафт"], "addr": "ул. Максима Горького, 72"},
+        {"name": "Harat's Pub", "category": "Бар", "budget": 2100, "rating": 4.3, "tags": ["коктейли", "шумно", "танцы"], "addr": "ул. Пушкинская, 1"},
+        {"name": "Mojo", "category": "Бар", "budget": 1200, "rating": 4.1, "tags": ["музыка", "вечер", "коктейли"], "addr": "ул. Большая Садовая, 46"},
+        {"name": "Jungle", "category": "Бар", "budget": 1900, "rating": 4.8, "tags": ["алкоголь", "танцы", "шумно"], "addr": "ул. Соколова, 15"},
+        {"name": "Циферблат", "category": "Развлечения", "budget": 800, "rating": 4.3, "tags": ["активный отдых", "кино", "аттракционы"], "addr": "ул. Суворова, 138"},
+        {"name": "Некафе", "category": "Развлечения", "budget": 900, "rating": 4.7, "tags": ["свидание", "квест", "аттракционы"], "addr": "ул. Пушкинская, 54"},
+        {"name": "КиноМакс", "category": "Развлечения", "budget": 2300, "rating": 4.5, "tags": ["игры", "свидание", "активный отдых"], "addr": "ул. Максима Горького, 79"},
+        {"name": "Горизонт", "category": "Развлечения", "budget": 1200, "rating": 4.6, "tags": ["активный отдых", "квест", "кино"], "addr": "ул. Пушкинская, 56"},
+        {"name": "Изоляция", "category": "Развлечения", "budget": 2200, "rating": 4.1, "tags": ["квест", "животные", "свидание"], "addr": "ул. Большая Садовая, 130"},
+        {"name": "Парк Революции", "category": "Развлечения", "budget": 700, "rating": 5.0, "tags": ["квест", "активный отдых", "аттракционы"], "addr": "ул. Суворова, 48"},
+        {"name": "Аквапарк H2O", "category": "Развлечения", "budget": 2000, "rating": 4.9, "tags": ["аттракционы", "квест", "семья"], "addr": "ул. Суворова, 106"},
+        {"name": "Зоопарк", "category": "Развлечения", "budget": 2300, "rating": 4.8, "tags": ["кино", "свидание", "активный отдых"], "addr": "ул. Ворошиловский, 2"},
+        {"name": "Батутный парк", "category": "Развлечения", "budget": 1500, "rating": 4.7, "tags": ["игры", "семья", "животные"], "addr": "ул. Суворова, 100"},
+        {"name": "Клуб Мёд", "category": "Развлечения", "budget": 2100, "rating": 4.9, "tags": ["животные", "кино", "квест"], "addr": "ул. Большая Садовая, 130"},
+        {"name": "Квест Выход", "category": "Развлечения", "budget": 2200, "rating": 4.7, "tags": ["кино", "животные", "семья"], "addr": "ул. Максима Горького, 118"},
+        {"name": "Титаник", "category": "Развлечения", "budget": 2400, "rating": 4.3, "tags": ["аттракционы", "кино", "свидание"], "addr": "ул. Максима Горького, 67"},
+        {"name": "Парк Горького", "category": "Развлечения", "budget": 800, "rating": 4.7, "tags": ["квест", "кино", "животные"], "addr": "ул. Соколова, 63"},
+        {"name": "Секретное место #1", "category": "Необычные места", "budget": 1800, "rating": 4.6, "tags": ["друзья", "отдых", "прогулка"], "addr": "ул. Соколова, 130"},
+        {"name": "Секретное место #2", "category": "Необычные места", "budget": 1500, "rating": 4.9, "tags": ["арт-пространство", "недорого", "друзья"], "addr": "ул. Суворова, 55"},
+        {"name": "Секретное место #3", "category": "Необычные места", "budget": 1300, "rating": 4.4, "tags": ["арт-пространство", "прогулка", "отдых"], "addr": "ул. Суворова, 139"},
+        {"name": "Секретное место #4", "category": "Необычные места", "budget": 1800, "rating": 4.7, "tags": ["арт-пространство", "друзья", "отдых"], "addr": "ул. Красноармейская, 33"},
+        {"name": "Секретное место #5", "category": "Необычные места", "budget": 1100, "rating": 4.0, "tags": ["отдых", "свидание", "недорого"], "addr": "ул. Суворова, 70"},
+        {"name": "Секретное место #6", "category": "Необычные места", "budget": 1500, "rating": 4.4, "tags": ["отдых", "друзья", "недорого"], "addr": "ул. Большая Садовая, 27"},
+        {"name": "Секретное место #7", "category": "Необычные места", "budget": 700, "rating": 4.4, "tags": ["отдых", "друзья", "прогулка"], "addr": "ул. Красноармейская, 29"},
+        {"name": "Секретное место #8", "category": "Необычные места", "budget": 600, "rating": 4.3, "tags": ["друзья", "свидание", "недорого"], "addr": "ул. Красноармейская, 89"},
+        {"name": "Секретное место #9", "category": "Необычные места", "budget": 1600, "rating": 4.7, "tags": ["свидание", "недорого", "друзья"], "addr": "ул. Красноармейская, 142"},
+        {"name": "Секретное место #10", "category": "Необычные места", "budget": 1900, "rating": 4.8, "tags": ["прогулка", "отдых", "недорого"], "addr": "ул. Соколова, 131"},
+        {"name": "Секретное место #11", "category": "Необычные места", "budget": 600, "rating": 4.2, "tags": ["свидание", "прогулка", "отдых"], "addr": "ул. Суворова, 86"},
+        {"name": "Секретное место #12", "category": "Необычные места", "budget": 500, "rating": 4.8, "tags": ["отдых", "свидание", "арт-пространство"], "addr": "ул. Большая Садовая, 63"}
+    ];
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+    // Дополнительные имена для расширения базы до 150 мест
+    const newNames = [
+        "Skuratov Coffee", "Вкусно и Точка", "Rostic's", "Do.Bro Coffee", "Coffee Like", "Хлебная Лавка", "Paul", "Дринкит", "Шоколадница", "Кофе Культ", "Cofix", "Surf Coffee x", "Кропоткин", "Келлер", "KFC", // Кафе
+        "Горы Горы", "Бургер & Дым", "Пхали-Хинкали", "Мадьяр", "Ассорти", "Шашлычный двор", "Рис & Рыба", "Sapore Italiano", "Осака", "Тануки", "Донская Чаша", "Петровский Причал", "Станция", "Палуба", "Бурж", // Рестораны
+        "Mr. Fox", "Грифон", "London Pub", "Dublin", "Pint Haus", "Библиотека", "Гараж", "Толстый и Тонкий", "Напитки покрепче", "Пивная библиотека", "Камыши", "Sunset", "Rock Bar", "Underground", "Синдикат", "Кроличья Нора", "Сидр & Эль", // Бары
+        "Драмтеатр", "Музыкальный театр", "Стереокино", "Полярная станция", "Лазертаг Арена", "Картинг-центр", "Скалодром", "Ледовый каток", "Музей ИЗО", "Краеведческий", "Макаронка", "Квест Пила", "Планетарий", "Ботанический сад" // Развлечения
+    ];
 
-        body {
-            background: linear-gradient(135deg, var(--dark-navy) 0%, #1d3549 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* ИСПОЛЬЗУЕМ ДИНАМИЧЕСКУЮ ВЫСОТУ ДЛЯ ТЕЛЕФОНОВ (100dvh) */
-            height: 100dvh;
-            overflow: hidden; /* Блокируем скролл всей страницы */
-            color: var(--dark-navy);
+    // Генератор: расширяет базу с 75 до 150 локаций
+    let placesDB = [...baseDB];
+    let nameIdx = 0;
+    
+    for (let i = 0; i < 75; i++) {
+        const basePlace = baseDB[i % baseDB.length];
+        
+        let newName;
+        if (basePlace.category === "Необычные места") {
+            newName = `Секретное место #${i + 13}`;
+        } else {
+            newName = newNames[nameIdx % newNames.length];
+            nameIdx++;
         }
+        
+        placesDB.push({
+            name: newName,
+            category: basePlace.category,
+            budget: basePlace.budget + Math.floor(Math.random() * 5)*100 + 100, // Уникальный бюджет
+            rating: Math.min(5.0, basePlace.rating + (Math.random() * 0.4 - 0.1)).toFixed(1), // Уникальный рейтинг
+            tags: basePlace.tags,
+            addr: basePlace.addr.replace(/\d+/, match => parseInt(match) + Math.floor(Math.random() * 40) + 1) // Уникальный адрес
+        });
+    }
 
-        #app {
-            width: 100%;
-            max-width: 460px;
-            height: 100dvh;
-            background-color: var(--cream);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
-        }
+    let guestsCount = 2;
+    const chatWindow = document.getElementById('chat-window');
+    const chatInput = document.getElementById('chat-input');
 
-        @media (min-width: 500px) {
-            #app {
-                height: 94vh;
-                border-radius: 28px;
-                border: 6px solid #243b4f;
+    function changeGuests(delta) {
+        guestsCount = Math.max(1, Math.min(15, guestsCount + delta));
+        document.getElementById('guest-count').innerText = guestsCount;
+        document.getElementById('book-guests').value = guestsCount;
+    }
+
+    function switchTab(tabId, btnEl) {
+        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+        document.getElementById('view-' + tabId).classList.add('active');
+        btnEl.classList.add('active');
+        if (tabId === 'catalog') renderCatalog('Все');
+    }
+
+    function quickAsk(text) {
+        chatInput.value = text;
+        sendUserMessage();
+    }
+
+    function sendUserMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        chatWindow.innerHTML += `
+            <div class="msg-row user">
+                <div class="bubble user">${text}</div>
+            </div>
+        `;
+        chatInput.value = '';
+        
+        // Плавная прокрутка с учетом отступа под меню
+        setTimeout(() => chatWindow.scrollTo({top: chatWindow.scrollHeight, behavior: 'smooth'}), 50);
+
+        setTimeout(() => {
+            analyzeAndRespond(text);
+        }, 450);
+    }
+
+    function analyzeAndRespond(rawText) {
+        const q = rawText.toLowerCase();
+
+        if (q.includes('один') || q.includes('одна') || q.includes('самому')) changeGuests(1 - guestsCount);
+        else if (q.includes('вдвоем') || q.includes('двое') || q.includes('свидан')) changeGuests(2 - guestsCount);
+        else if (q.includes('трое') || q.includes('втроем') || q.includes('нас 3')) changeGuests(3 - guestsCount);
+        else if (q.includes('четверо') || q.includes('вчетвером') || q.includes('нас 4')) changeGuests(4 - guestsCount);
+        else if (q.includes('компан') && guestsCount < 3) changeGuests(4 - guestsCount);
+
+        if (q.includes('гастротур')) return buildThematicRoute('Гастротур');
+        if (q.includes('барный тур') || q.includes('барный маршрут')) return buildThematicRoute('Барный маршрут');
+        if (q.includes('маршрут') || q.includes('тур ')) return buildThematicRoute('Романтический вечер');
+
+        let maxBudget = 10000;
+        const numMatch = q.match(/(\d{3,5})/);
+        if (numMatch) {
+            const parsedSum = parseInt(numMatch[1], 10);
+            if (q.includes('на человека') || q.includes('с человека')) {
+                maxBudget = parsedSum;
+            } else if (guestsCount > 1 && parsedSum >= 1500) {
+                maxBudget = Math.round(parsedSum / guestsCount);
+            } else {
+                maxBudget = parsedSum;
             }
-        }
-
-        header {
-            background-color: var(--dark-navy);
-            color: var(--cream);
-            padding: 14px 18px 10px;
-            z-index: 20;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .header-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 12px;
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-svg {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-
-        .brand-title {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: 0.3px;
-            line-height: 1.1;
-        }
-
-        .brand-title span {
-            color: var(--orange);
-        }
-
-        .brand-subtitle {
-            font-size: 11px;
-            color: var(--muted-teal);
-            font-weight: 600;
-        }
-
-        .guest-selector {
-            display: flex;
-            align-items: center;
-            background-color: rgba(48, 112, 130, 0.35);
-            border: 1px solid var(--muted-teal);
-            border-radius: 20px;
-            padding: 4px 10px;
-            gap: 8px;
-            font-size: 13px;
-            font-weight: 700;
-        }
-
-        .guest-btn {
-            background: var(--orange);
-            color: var(--dark-navy);
-            border: none;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        .nav-tabs {
-            display: flex;
-            gap: 6px;
-            background-color: rgba(255,255,255,0.06);
-            padding: 4px;
-            border-radius: 12px;
-        }
-
-        .nav-tab {
-            flex: 1;
-            text-align: center;
-            padding: 7px 6px;
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--cream);
-            background: transparent;
-            border: none;
-            border-radius: 9px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .nav-tab.active {
-            background-color: var(--orange);
-            color: var(--dark-navy);
-        }
-
-        .view-section {
-            flex: 1;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            /* ФИКС ОБРЕЗКИ: не дает чату выталкивать меню вниз */
-            min-height: 0; 
-        }
-
-        .view-section.active {
-            display: flex;
-        }
-
-        .quick-chips {
-            display: flex;
-            gap: 8px;
-            padding: 10px 16px;
-            overflow-x: auto;
-            background-color: rgba(108, 163, 162, 0.15);
-            border-bottom: 1px solid rgba(48, 112, 130, 0.15);
-            scrollbar-width: none;
-        }
-        .quick-chips::-webkit-scrollbar { display: none; }
-
-        .chip {
-            white-space: nowrap;
-            background-color: var(--white);
-            color: var(--dark-navy);
-            border: 1.5px solid var(--muted-teal);
-            padding: 6px 12px;
-            border-radius: 18px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-            flex-shrink: 0;
-        }
-
-        .chip:hover, .chip:active {
-            background-color: var(--deep-teal);
-            color: var(--white);
-            border-color: var(--deep-teal);
-        }
-
-        #chat-window {
-            flex: 1;
-            padding: 16px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            scroll-behavior: smooth;
-        }
-
-        .msg-row {
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-            animation: fadeIn 0.25s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .msg-row.user {
-            justify-content: flex-end;
-        }
-
-        .bot-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 12px;
-            flex-shrink: 0;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-        }
-
-        .bubble {
-            max-width: 85%;
-            padding: 12px 15px;
-            border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.45;
-        }
-
-        .bubble.bot {
-            background-color: var(--white);
-            color: var(--dark-navy);
-            border-bottom-left-radius: 4px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .bubble.user {
-            background-color: var(--deep-teal);
-            color: var(--white);
-            border-bottom-right-radius: 4px;
-            font-weight: 600;
-        }
-
-        .walk-summary {
-            background: linear-gradient(135deg, var(--dark-navy), var(--deep-teal));
-            color: var(--cream);
-            padding: 10px 12px;
-            border-radius: 12px;
-            margin: 10px 0;
-            font-size: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .walk-summary-title {
-            color: var(--orange);
-            font-weight: 800;
-            font-size: 13px;
-        }
-
-        .cards-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .place-card {
-            background-color: var(--cream);
-            border-radius: 14px;
-            padding: 12px;
-            border-left: 5px solid var(--deep-teal);
-            position: relative;
-            transition: transform 0.15s;
-        }
-
-        .place-card.sponsor {
-            border-left-color: var(--orange);
-            background: linear-gradient(to right, #fff8ef, var(--cream));
-        }
-
-        .badge-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4px;
-        }
-
-        .cat-label {
-            font-size: 11px;
-            font-weight: 800;
-            color: var(--deep-teal);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .sponsor-badge {
-            background-color: var(--orange);
-            color: var(--dark-navy);
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .step-badge {
-            background-color: var(--dark-navy);
-            color: var(--orange);
-            font-size: 10px;
-            font-weight: 800;
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
-        .place-name {
-            font-size: 16px;
-            font-weight: 800;
-            color: var(--dark-navy);
-            margin-bottom: 4px;
-        }
-
-        .place-metrics {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--dark-navy);
-            margin-bottom: 6px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .place-metrics span.total-price {
-            color: var(--deep-teal);
-        }
-
-        .tags-wrap {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 8px;
-        }
-
-        .tag {
-            background-color: var(--muted-teal);
-            color: var(--white);
-            font-size: 11px;
-            font-weight: 700;
-            padding: 2px 8px;
-            border-radius: 8px;
-        }
-
-        .place-addr {
-            font-size: 12px;
-            color: #4a5c6a;
-            margin-bottom: 8px;
-        }
-
-        .ai-reason {
-            font-size: 11.5px;
-            background-color: rgba(255,255,255,0.7);
-            padding: 6px 8px;
-            border-radius: 8px;
-            color: var(--dark-navy);
-            margin-bottom: 8px;
-            border-left: 2px solid var(--orange);
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 6px;
-            margin-top: 8px;
-        }
-
-        .btn-book, .btn-route {
-            flex: 1;
-            border: none;
-            padding: 8px 10px;
-            border-radius: 9px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: 0.2s;
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-book {
-            background-color: var(--orange);
-            color: var(--dark-navy);
-        }
-
-        .btn-route {
-            background-color: var(--muted-teal);
-            color: var(--white);
-        }
-
-        .btn-book:hover, .btn-route:hover {
-            filter: brightness(1.05);
-        }
-
-        .btn-share-poll {
-            margin-top: 10px;
-            width: 100%;
-            background-color: var(--deep-teal);
-            color: var(--white);
-            border: none;
-            padding: 9px;
-            border-radius: 10px;
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-
-        /* НОВЫЙ ДИЗАЙН ПАРЯЩЕЙ ПАНЕЛИ ВВОДА (ОРГАНИЧНЫЙ) */
-        .input-bar {
-            display: flex;
-            padding: 10px 16px 26px; /* Отступ снизу для "Safe Area" на телефонах */
-            background: linear-gradient(to top, var(--cream) 70%, rgba(236, 231, 220, 0)); /* Плавное растворение фона */
-            gap: 10px;
-            align-items: center;
-            border-top: none;
-            position: relative;
-            z-index: 10;
-        }
-
-        #chat-input {
-            flex: 1;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 26px; /* Форма капсулы */
-            background-color: var(--white);
-            color: var(--dark-navy);
-            font-size: 14.5px;
-            font-weight: 600;
-            outline: none;
-            box-shadow: 0 6px 16px rgba(18, 33, 46, 0.07); /* Мягкая парящая тень */
-            transition: box-shadow 0.3s;
-        }
-
-        #chat-input:focus {
-            box-shadow: 0 8px 24px rgba(48, 112, 130, 0.15); /* Подсветка при клике */
-        }
-
-        #send-btn {
-            background-color: var(--orange);
-            color: var(--dark-navy);
-            border: none;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            font-size: 18px;
-            font-weight: 800;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 6px 14px rgba(234, 153, 64, 0.35); /* Цветная тень кнопки */
-            transition: transform 0.2s;
-        }
-
-        #send-btn:active {
-            transform: scale(0.92); /* Анимация нажатия */
-        }
-
-        .tours-container, .catalog-container {
-            padding: 16px;
-            overflow-y: auto;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .tour-preset-card {
-            background-color: var(--white);
-            border-radius: 16px;
-            padding: 16px;
-            box-shadow: var(--card-shadow);
-            border-top: 4px solid var(--orange);
-        }
-
-        .tour-preset-card h3 {
-            font-size: 17px;
-            margin-bottom: 6px;
-            color: var(--dark-navy);
-        }
-
-        .tour-preset-card p {
-            font-size: 13px;
-            color: #4a5c6a;
-            margin-bottom: 12px;
-            line-height: 1.4;
-        }
-
-        .filter-bar {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            flex-shrink: 0;
-        }
-
-        .modal-overlay {
-            position: absolute;
-            inset: 0;
-            background-color: rgba(18, 33, 46, 0.75);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 100;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-box {
-            background-color: var(--cream);
-            width: 100%;
-            max-width: 360px;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-            border: 2px solid var(--orange);
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: 800;
-            margin-bottom: 6px;
-            color: var(--dark-navy);
-        }
-
-        .modal-sub {
-            font-size: 13px;
-            color: var(--deep-teal);
-            font-weight: 700;
-            margin-bottom: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 12px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1.5px solid var(--muted-teal);
-            background-color: var(--white);
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .btn-cancel {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1.5px solid var(--dark-navy);
-            background: transparent;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .btn-confirm {
-            flex: 1.5;
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            background-color: var(--orange);
-            color: var(--dark-navy);
-            font-weight: 800;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-<svg style="display:none;">
-    <symbol id="vibewalk-wolf" viewBox="0 0 120 120">
-        <defs>
-            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#195363"/>
-                <stop offset="100%" stop-color="#307082"/>
-            </linearGradient>
-            <linearGradient id="wolfGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#EA9940"/>
-                <stop offset="55%" stop-color="#f3be7a"/>
-                <stop offset="100%" stop-color="#ECE7DC"/>
-            </linearGradient>
-        </defs>
-        <rect width="120" height="120" rx="26" fill="url(#skyGrad)"/>
-        <polygon points="24,14 26,20 32,22 26,24 24,30 22,24 16,22 22,20" fill="#EA9940"/>
-        <polygon points="56,12 57.5,16 62,17.5 57.5,19 56,23 54.5,19 50,17.5 54.5,16" fill="#6CA3A2"/>
-        <polygon points="98,28 99.5,32 104,33.5 99.5,35 98,39 96.5,35 92,33.5 96.5,32" fill="#ECE7DC"/>
-        <circle cx="88" cy="18" r="2" fill="#ECE7DC"/>
-        <polygon points="0,78 22,48 48,72 62,40 88,68 104,46 120,74 120,120 0,120" fill="#183b49"/>
-        <rect y="74" width="120" height="46" fill="#12212E"/>
-        <path d="M 42,120 C 56,105 92,98 86,82 C 82,74 68,74 62,74 L 74,74 C 88,76 104,84 96,102 C 90,114 78,120 72,120 Z" fill="#6CA3A2"/>
-        <path d="M 32,74 C 25,74 20,79 20,86 C 20,95 32,106 32,106 C 32,106 44,95 44,86 C 44,79 39,74 32,74 Z" fill="#6CA3A2"/>
-        <circle cx="32" cy="85" r="5" fill="#12212E"/>
-        <path d="M 28,36 L 38,18 L 48,36" fill="none" stroke="#EA9940" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M 72,36 L 82,18 L 92,36" fill="none" stroke="#EA9940" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M 26,42 L 45,42 C 47,42 49,44 50,47 L 60,78 L 70,47 C 71,44 73,42 75,42 L 94,42 L 66,98 C 63,103 57,103 54,98 Z" fill="url(#wolfGrad)"/>
-        <circle cx="47" cy="60" r="3.6" fill="#12212E"/>
-        <circle cx="73" cy="60" r="3.6" fill="#12212E"/>
-        <polygon points="55,91 65,91 60,99" fill="#12212E"/>
-    </symbol>
-</svg>
-
-<div id="app">
-    <header>
-        <div class="header-top">
-            <div class="brand">
-                <svg class="logo-svg"><use href="#vibewalk-wolf"></use></svg>
-                <div>
-                    <div class="brand-title">Vibe<span>Walk</span></div>
-                    <div class="brand-subtitle">Ростов-на-Дону • ИИ-гид</div>
+        } else if (q.includes('недорог') || q.includes('дешев') || q.includes('бюджетн')) {
+            maxBudget = 1000;
+        }
+
+        const scored = placesDB.map(place => {
+            let score = 0;
+            let reasons = [];
+
+            if (place.budget <= maxBudget) score += 3;
+            else score -= 5;
+
+            if ((q.includes('кофе') || q.includes('кафе') || q.includes('завтрак') || q.includes('десерт')) && place.category === 'Кафе/Кофейня') { score += 5; reasons.push('подходит для кофе и десертов'); }
+            if ((q.includes('ресторан') || q.includes('ужин') || q.includes('поесть') || q.includes('мяс') || q.includes('вин')) && place.category === 'Ресторан') { score += 5; reasons.push('отличная кухня для ужина'); }
+            if ((q.includes('бар') || q.includes('выпить') || q.includes('коктейл') || q.includes('танц') || q.includes('крафт')) && place.category === 'Бар') { score += 5; reasons.push('атмосферный барный формат'); }
+            if ((q.includes('квест') || q.includes('кино') || q.includes('активн') || q.includes('развлеч') || q.includes('парк')) && place.category === 'Развлечения') { score += 5; reasons.push('активный формат досуга'); }
+            if ((q.includes('необычн') || q.includes('секрет') || q.includes('арт') || q.includes('новое')) && place.category === 'Необычные места') { score += 6; reasons.push('нешаблонная локация'); }
+
+            place.tags.forEach(t => { if (q.includes(t.slice(0, 4))) { score += 3; reasons.push(`тег «${t}»`); } });
+
+            if (q.includes('тих') || q.includes('не слишком шумно') || q.includes('уют')) {
+                if (place.tags.includes('тихо') || place.tags.includes('уютно')) { score += 4; reasons.push('спокойная атмосфера'); }
+                if (place.tags.includes('шумно')) score -= 4;
+            }
+
+            return { ...place, score, reasonText: reasons.length ? reasons.join(', ') : 'подходит по вашим критериям' };
+        });
+
+        let results = scored.filter(p => p.score > 0).sort((a, b) => b.score - a.score || b.rating - a.rating).slice(0, 3);
+        if (results.length === 0) results = scored.sort((a, b) => b.rating - a.rating).slice(0, 3);
+
+        renderBotCards(results, `Я проанализировал базу (150 мест) для <b>${guestsCount} чел.</b> (лимит ~${maxBudget < 9000 ? maxBudget + ' ₽/чел.' : 'без ограничений'}) и подобрал варианты:`, false);
+    }
+
+    function buildThematicRoute(type) {
+        let step1 = placesDB.find(p => p.name === 'Гаврош') || placesDB[0];
+        let step2 = placesDB.find(p => p.name === 'Leo Wine & Kitchen') || placesDB[16];
+        let step3 = placesDB.find(p => p.name === 'Голодранец') || placesDB[37];
+        let title = '🗺️ Маршрут «Гастротур по Ростову»';
+
+        if (type === 'Романтический вечер') {
+            title = '❤️ Маршрут «Романтический вечер»';
+            step1 = placesDB.find(p => p.name === 'Секретное место #12') || placesDB[74];
+            step2 = placesDB.find(p => p.name === 'Беллуччи') || placesDB[26];
+            step3 = placesDB.find(p => p.name === 'CUP by CUP') || placesDB[9];
+        } else if (type === 'Барный маршрут') {
+            title = '🍹 Маршрут «Барный тур по центру»';
+            step1 = placesDB.find(p => p.name === 'Свое Место') || placesDB[43];
+            step2 = placesDB.find(p => p.name === 'Shanghai 12') || placesDB[40];
+            step3 = placesDB.find(p => p.name === 'Молодость') || placesDB[41];
+        } else if (type === 'Культурный вечер') {
+            title = '🎭 Маршрут «Культурный вечер»';
+            step1 = placesDB.find(p => p.name === 'Секретное место #2') || placesDB[64];
+            step2 = placesDB.find(p => p.name === 'Горизонт') || placesDB[53];
+            step3 = placesDB.find(p => p.name === 'Казачий Курень') || placesDB[36];
+        }
+
+        const routeSteps = [
+            { ...step1, stepTitle: 'Точка 1 • Старт', reasonText: 'Начало маршрута в центре' },
+            { ...step2, stepTitle: 'Точка 2 • Программа', reasonText: 'В 10 минутах пешком от первой локации' },
+            { ...step3, stepTitle: 'Точка 3 • Финал', reasonText: 'Атмосферное завершение маршрута' }
+        ];
+
+        renderBotCards(routeSteps, `Готов персональный план отдыха: <b>${title}</b>:`, true);
+    }
+
+    function renderBotCards(items, introHtml, isRoute) {
+        const sumPerPerson = items.reduce((acc, it) => acc + it.budget, 0);
+        const totalForGroup = sumPerPerson * guestsCount;
+
+        let summaryHtml = isRoute ? `
+            <div class="walk-summary">
+                <div class="walk-summary-title">📊 Расчет стоимости маршрута:</div>
+                <div>• На 1 человека: <b>${sumPerPerson} ₽</b></div>
+                <div>• На компанию (${guestsCount} чел.): <b>${totalForGroup} ₽</b></div>
+            </div>` : '';
+
+        const cardsHtml = items.map((item, idx) => {
+            const isSponsor = !isRoute && idx === 0;
+            const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent('Ростов-на-Дону ' + item.addr)}`;
+            return `
+                <div class="place-card ${isSponsor ? 'sponsor' : ''}">
+                    <div class="badge-row">
+                        <span class="cat-label">${item.category}</span>
+                        ${isRoute ? `<span class="step-badge">${item.stepTitle}</span>` : ''}
+                        ${isSponsor ? `<span class="sponsor-badge">Партнер VibeWalk</span>` : ''}
+                    </div>
+                    <div class="place-name">${item.name}</div>
+                    <div class="place-metrics">
+                        <span>⭐ ${item.rating}</span>
+                        <span>👤 ${item.budget} ₽/чел.</span>
+                        <span class="total-price">👥 На ${guestsCount} чел.: ${item.budget * guestsCount} ₽</span>
+                    </div>
+                    <div class="tags-wrap">${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+                    <div class="ai-reason">🤖 <b>Почему подходит:</b> ${item.reasonText}</div>
+                    <div class="place-addr">📍 г. Ростов-на-Дону, ${item.addr}</div>
+                    <div class="card-actions">
+                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.addr}')">📅 Забронь</button>
+                        <a href="${mapLink}" target="_blank" class="btn-route">🗺️ Маршрут</a>
+                    </div>
                 </div>
-            </div>
-            <div class="guest-selector" title="Количество человек для расчета чека">
-                <span>👥 Гостей:</span>
-                <button class="guest-btn" onclick="changeGuests(-1)">−</button>
-                <span id="guest-count">2</span>
-                <button class="guest-btn" onclick="changeGuests(1)">+</button>
-            </div>
-        </div>
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="switchTab('chat', this)">💬 ИИ-Подбор</button>
-            <button class="nav-tab" onclick="switchTab('tours', this)">🗺️ Маршруты</button>
-            <button class="nav-tab" onclick="switchTab('catalog', this)">📚 База (75)</button>
-        </div>
-    </header>
+            `;
+        }).join('');
 
-    <div id="view-chat" class="view-section active">
-        <div class="quick-chips">
-            <button class="chip" onclick="quickAsk('Нас трое, хотим посидеть в необычном месте, общий бюджет до 4500 рублей')">✨ Необычное место</button>
-            <button class="chip" onclick="buildThematicRoute('Гастротур')">🍽️ Собрать Гастротур</button>
-            <button class="chip" onclick="buildThematicRoute('Романтический вечер')">❤️ Свидание (Маршрут)</button>
-            <button class="chip" onclick="quickAsk('Хотим недорого выпить кофе и десерты до 700 рублей в тихом месте')">☕ Уютная кофейня</button>
-            <button class="chip" onclick="buildThematicRoute('Барный маршрут')">🍹 Барный тур</button>
-            <button class="chip" onclick="quickAsk('Куда сходить компанией на квест или активный отдых?')">🎲 Активный отдых</button>
-        </div>
-
-        <div id="chat-window">
+        chatWindow.innerHTML += `
             <div class="msg-row bot">
                 <svg class="bot-avatar"><use href="#vibewalk-wolf"></use></svg>
                 <div class="bubble bot">
-                    Привет! Я <b>Волчок</b> — твой ИИ-проводник по Ростову-на-Дону 🐾<br><br>
-                    Опиши в свободной форме, как хочешь провести время: укажи <b>компанию, бюджет, кухню или настроение</b>. Я мгновенно проанализирую 75 локаций города, посчитаю бюджет прогулки или соберу готовый маршрут!
+                    ${introHtml} ${summaryHtml} <div class="cards-list">${cardsHtml}</div>
+                    <button class="btn-share-poll" onclick="sharePoll(this)">🔗 Отправить подборку на голосование</button>
                 </div>
             </div>
-        </div>
+        `;
+        setTimeout(() => chatWindow.scrollTo({top: chatWindow.scrollHeight, behavior: 'smooth'}), 50);
+    }
 
-        <div class="input-bar">
-            <input type="text" id="chat-input" placeholder="Введите ваш запрос..." onkeypress="if(event.key==='Enter') sendUserMessage()">
-            <button id="send-btn" onclick="sendUserMessage()">➤</button>
-        </div>
-    </div>
+    function renderCatalog(categoryFilter) {
+        const listEl = document.getElementById('catalog-list');
+        const filtered = categoryFilter === 'Все' ? placesDB : placesDB.filter(p => p.category === categoryFilter);
 
-    <div id="view-tours" class="view-section">
-        <div class="tours-container">
-            <div class="tour-preset-card">
-                <h3>🍽️ Гастрономический тур</h3>
-                <p>Последовательный маршрут из 3 заведений: утренний или дневной кофе с десертом, колоритный ужин в ресторане и завершение вечера в атмосферном коктейльном баре.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Гастротур');">Сгенерировать маршрут с ИИ</button>
-            </div>
-            <div class="tour-preset-card">
-                <h3>❤️ Романтический вечер</h3>
-                <p>Идеальный сценарий для свидания: прогулка или необычное арт-пространство, ужин с панорамным видом и вином, а также тихая кофейня.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Романтический вечер');">Сгенерировать маршрут с ИИ</button>
-            </div>
-            <div class="tour-preset-card">
-                <h3>🍹 Барный маршрут</h3>
-                <p>Насыщенный вечер для компании друзей: старт в крафтовом пабе, перемещение в коктейльный бар на Садовой и финал с музыкой и танцами.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Барный маршрут');">Сгенерировать маршрут с ИИ</button>
-            </div>
-            <div class="tour-preset-card">
-                <h3>🎭 Культурный вечер</h3>
-                <p>Сочетание развлекательных и культурных локаций Ростова с уютными гастрономическими местами поблизости.</p>
-                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Культурный вечер');">Сгенерировать маршрут с ИИ</button>
-            </div>
-        </div>
-    </div>
+        listEl.innerHTML = filtered.map(item => {
+            const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent('Ростов-на-Дону ' + item.addr)}`;
+            return `
+                <div class="place-card" style="background-color: var(--white);">
+                    <div class="badge-row">
+                        <span class="cat-label">${item.category}</span>
+                        <span>⭐ <b>${item.rating}</b></span>
+                    </div>
+                    <div class="place-name">${item.name}</div>
+                    <div class="place-metrics"><span>Средний чек: ${item.budget} ₽/чел.</span></div>
+                    <div class="tags-wrap">${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+                    <div class="place-addr">📍 г. Ростов-на-Дону, ${item.addr}</div>
+                    <div class="card-actions">
+                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.addr}')">📅 Бронь</button>
+                        <a href="${mapLink}" target="_blank" class="btn-route">🗺️ Маршрут</a>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
 
-    <div id="view-catalog" class="view-section">
-        <div class="catalog-container">
-            <div class="filter-bar">
-                <button class="chip" onclick="renderCatalog('Все')">Все (75)</button>
-                <button class="chip" onclick="renderCatalog('Кафе/Кофейня')">Кафе (15)</button>
-                <button class="chip" onclick="renderCatalog('Ресторан')">Рестораны (22)</button>
-                <button class="chip" onclick="renderCatalog('Бар')">Бары (13)</button>
-                <button class="chip" onclick="renderCatalog('Развлечения')">Развлечения (13)</button>
-                <button class="chip" onclick="renderCatalog('Необычные места')">Необычные (12)</button>
-            </div>
-            <div id="catalog-list" class="cards-list"></div>
-        </div>
-    </div>
+    function openBookingModal(name, addr) {
+        document.getElementById('modal-place-name').innerText = name;
+        document.getElementById('modal-place-info').innerText = addr;
+        document.getElementById('book-guests').value = guestsCount;
+        document.getElementById('booking-modal').classList.add('active');
+    }
 
-    <div id="booking-modal" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-title" id="modal-place-name">Бронирование столика</div>
-            <div class="modal-sub" id="modal-place-info">Онлайн-бронь через VibeWalk</div>
-            <div class="form-group">
-                <label>Ваше имя</label>
-                <input type="text" id="book-name" placeholder="Введите имя" value="Виктор">
-            </div>
-            <div class="form-group">
-                <label>Количество гостей</label>
-                <input type="number" id="book-guests" min="1" max="20" value="2">
-            </div>
-            <div class="form-group">
-                <label>Время визита</label>
-                <select id="book-time">
-                    <option>Сегодня, 19:00</option>
-                    <option>Сегодня, 20:30</option>
-                    <option>Завтра, 18:00</option>
-                    <option>В выходные, 19:30</option>
-                </select>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeBookingModal()">Отмена</button>
-                <button class="btn-confirm" onclick="confirmBooking()">Подтвердить бронь</button>
-            </div>
-        </div>
-    </div>
-</div>
+    function closeBookingModal() { document.getElementById('booking-modal').classList.remove('active'); }
 
-<script>
-    const placesDB = [
-        {"name": "Сметана", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.4, "tags": ["уютно", "десерты", "тихо"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 97"},
-        {"name": "Питькофе", "category": "Кафе/Кофейня", "budget_per_person": 500, "rating": 4.2, "tags": ["завтрак", "работа", "быстро"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 96"},
-        {"name": "Золотой Колос", "category": "Кафе/Кофейня", "budget_per_person": 1000, "rating": 4.1, "tags": ["кофе", "завтрак", "десерты"], "address": "г. Ростов-на-Дону, ул. Соколова, 125"},
-        {"name": "Кекс", "category": "Кафе/Кофейня", "budget_per_person": 600, "rating": 4.4, "tags": ["завтрак", "кофе", "десерты"], "address": "г. Ростов-на-Дону, ул. Буденновский, 87"},
-        {"name": "Правда", "category": "Кафе/Кофейня", "budget_per_person": 900, "rating": 4.4, "tags": ["быстро", "тихо", "десерты"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 114"},
-        {"name": "Setters", "category": "Кафе/Кофейня", "budget_per_person": 300, "rating": 4.6, "tags": ["десерты", "быстро", "завтрак"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 105"},
-        {"name": "Авокадо", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.1, "tags": ["быстро", "завтрак", "работа"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 5"},
-        {"name": "Бутерброд", "category": "Кафе/
+    function confirmBooking() {
+        const place = document.getElementById('modal-place-name').innerText;
+        const g = document.getElementById('book-guests').value;
+        const t = document.getElementById('book-time').value;
+        closeBookingModal();
+        chatWindow.innerHTML += `
+            <div class="msg-row bot">
+                <svg class="bot-avatar"><use href="#vibewalk-wolf"></use></svg>
+                <div class="bubble bot">
+                    ✅ <b>Бронь подтверждена!</b><br>Заведение: <b>${place}</b><br>
+                    Гостей: ${g} чел. • Время: ${t}<br><i>Партнерский купон VibeWalk закреплен.</i>
+                </div>
+            </div>`;
+        setTimeout(() => chatWindow.scrollTo({top: chatWindow.scrollHeight, behavior: 'smooth'}), 50);
+    }
+
+    function sharePoll(btn) {
+        btn.innerText = '✅ Ссылка на голосование скопирована!';
+        btn.style.backgroundColor = '#EA9940';
+        btn.style.color = '#12212E';
+    }
+</script>
+</body>
+</html>
