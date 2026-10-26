@@ -1,8 +1,3 @@
-Вот полный обновленный код файла `index.html`. В него добавлены стили и кнопки для перехода в Яндекс.Карты (функции `renderBotCards` и `renderCatalog` изменены так, чтобы рядом с кнопкой бронирования формировалась автоматическая ссылка с адресом заведения).
-
-Скопируй этот код целиком и полностью замени им старый текст в редакторе GitHub.
-
-```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -34,15 +29,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            /* ИСПОЛЬЗУЕМ ДИНАМИЧЕСКУЮ ВЫСОТУ ДЛЯ ТЕЛЕФОНОВ (100dvh) */
+            height: 100dvh;
+            overflow: hidden; /* Блокируем скролл всей страницы */
             color: var(--dark-navy);
         }
 
         #app {
             width: 100%;
             max-width: 460px;
-            height: 100vh;
-            max-height: 920px;
+            height: 100dvh;
             background-color: var(--cream);
             display: flex;
             flex-direction: column;
@@ -164,6 +160,8 @@
             display: none;
             flex-direction: column;
             overflow: hidden;
+            /* ФИКС ОБРЕЗКИ: не дает чату выталкивать меню вниз */
+            min-height: 0; 
         }
 
         .view-section.active {
@@ -382,7 +380,6 @@
             border-left: 2px solid var(--orange);
         }
 
-        /* Обновленные стили кнопок действий в карточке */
         .card-actions {
             display: flex;
             gap: 6px;
@@ -436,37 +433,42 @@
             gap: 6px;
         }
 
+        /* НОВЫЙ ДИЗАЙН ПАРЯЩЕЙ ПАНЕЛИ ВВОДА (ОРГАНИЧНЫЙ) */
         .input-bar {
             display: flex;
-            padding: 12px 14px;
-            background-color: var(--white);
-            border-top: 1px solid rgba(18, 33, 46, 0.1);
-            gap: 8px;
+            padding: 10px 16px 26px; /* Отступ снизу для "Safe Area" на телефонах */
+            background: linear-gradient(to top, var(--cream) 70%, rgba(236, 231, 220, 0)); /* Плавное растворение фона */
+            gap: 10px;
             align-items: center;
+            border-top: none;
+            position: relative;
+            z-index: 10;
         }
 
         #chat-input {
             flex: 1;
-            padding: 12px 16px;
-            border: 1.5px solid var(--muted-teal);
-            border-radius: 24px;
-            background-color: var(--cream);
+            padding: 14px 20px;
+            border: none;
+            border-radius: 26px; /* Форма капсулы */
+            background-color: var(--white);
             color: var(--dark-navy);
-            font-size: 14px;
+            font-size: 14.5px;
             font-weight: 600;
             outline: none;
+            box-shadow: 0 6px 16px rgba(18, 33, 46, 0.07); /* Мягкая парящая тень */
+            transition: box-shadow 0.3s;
         }
 
         #chat-input:focus {
-            border-color: var(--deep-teal);
+            box-shadow: 0 8px 24px rgba(48, 112, 130, 0.15); /* Подсветка при клике */
         }
 
         #send-btn {
             background-color: var(--orange);
             color: var(--dark-navy);
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             font-size: 18px;
             font-weight: 800;
@@ -475,6 +477,12 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            box-shadow: 0 6px 14px rgba(234, 153, 64, 0.35); /* Цветная тень кнопки */
+            transition: transform 0.2s;
+        }
+
+        #send-btn:active {
+            transform: scale(0.92); /* Анимация нажатия */
         }
 
         .tours-container, .catalog-container {
@@ -682,7 +690,7 @@
         </div>
 
         <div class="input-bar">
-            <input type="text" id="chat-input" placeholder="Например: уютное место на троих до 3000 ₽..." onkeypress="if(event.key==='Enter') sendUserMessage()">
+            <input type="text" id="chat-input" placeholder="Введите ваш запрос..." onkeypress="if(event.key==='Enter') sendUserMessage()">
             <button id="send-btn" onclick="sendUserMessage()">➤</button>
         </div>
     </div>
@@ -764,357 +772,778 @@
         {"name": "Правда", "category": "Кафе/Кофейня", "budget_per_person": 900, "rating": 4.4, "tags": ["быстро", "тихо", "десерты"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 114"},
         {"name": "Setters", "category": "Кафе/Кофейня", "budget_per_person": 300, "rating": 4.6, "tags": ["десерты", "быстро", "завтрак"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 105"},
         {"name": "Авокадо", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.1, "tags": ["быстро", "завтрак", "работа"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 5"},
-        {"name": "Бутерброд", "category": "Кафе/Кофейня", "budget_per_person": 600, "rating": 4.4, "tags": ["тихо", "десерты", "быстро"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 72"},
-        {"name": "Surf Coffee", "category": "Кафе/Кофейня", "budget_per_person": 300, "rating": 4.1, "tags": ["работа", "быстро", "десерты"], "address": "г. Ростов-на-Дону, ул. Соколова, 62"},
-        {"name": "CUP by CUP", "category": "Кафе/Кофейня", "budget_per_person": 700, "rating": 4.4, "tags": ["уютно", "тихо", "быстро"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 7"},
-        {"name": "Кофе и Люди", "category": "Кафе/Кофейня", "budget_per_person": 1000, "rating": 4.3, "tags": ["быстро", "уютно", "работа"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 130"},
-        {"name": "Кофеман", "category": "Кафе/Кофейня", "budget_per_person": 500, "rating": 4.5, "tags": ["работа", "завтрак", "десерты"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 122"},
-        {"name": "Гаврош", "category": "Кафе/Кофейня", "budget_per_person": 700, "rating": 4.6, "tags": ["кофе", "десерты", "работа"], "address": "г. Ростов-на-Дону, ул. Буденновский, 56"},
-        {"name": "Keks", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.8, "tags": ["завтрак", "тихо", "десерты"], "address": "г. Ростов-на-Дону, ул. Буденновский, 122"},
-        {"name": "Goodman", "category": "Кафе/Кофейня", "budget_per_person": 600, "rating": 4.2, "tags": ["десерты", "кофе", "быстро"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 111"},
-        {"name": "Ош Пош", "category": "Ресторан", "budget_per_person": 4500, "rating": 4.1, "tags": ["мясо", "ужин", "вкусно"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 89"},
-        {"name": "Leo Wine & Kitchen", "category": "Ресторан", "budget_per_person": 1300, "rating": 4.8, "tags": ["свидание", "ужин", "вкусно"], "address": "г. Ростов-на-Дону, ул. Суворова, 18"},
-        {"name": "Магадан", "category": "Ресторан", "budget_per_person": 3600, "rating": 4.9, "tags": ["мясо", "вино", "панорама"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 53"},
-        {"name": "ОнегинДача", "category": "Ресторан", "budget_per_person": 2300, "rating": 4.2, "tags": ["вино", "дорого", "ужин"], "address": "г. Ростов-на-Дону, ул. Суворова, 47"},
-        {"name": "LUKA PIZZA", "category": "Ресторан", "budget_per_person": 3400, "rating": 4.2, "tags": ["ужин", "мясо", "дорого"], "address": "г. Ростов-на-Дону, ул. Буденновский, 57"},
-        {"name": "Сицилия", "category": "Ресторан", "budget_per_person": 2400, "rating": 4.0, "tags": ["ужин", "вино", "вкусно"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 20"},
-        {"name": "Ялла", "category": "Ресторан", "budget_per_person": 4400, "rating": 4.4, "tags": ["компания", "свидание", "вино"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 42"},
-        {"name": "Пирс", "category": "Ресторан", "budget_per_person": 5000, "rating": 4.3, "tags": ["компания", "вкусно", "свидание"], "address": "г. Ростов-на-Дону, ул. Суворова, 46"},
-        {"name": "New York", "category": "Ресторан", "budget_per_person": 4600, "rating": 5.0, "tags": ["ужин", "компания", "дорого"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 87"},
-        {"name": "Высота 56", "category": "Ресторан", "budget_per_person": 1800, "rating": 4.6, "tags": ["вино", "ужин", "дорого"], "address": "г. Ростов-на-Дону, ул. Соколова, 17"},
-        {"name": "Эрти", "category": "Ресторан", "budget_per_person": 2500, "rating": 4.6, "tags": ["панорама", "дорого", "компания"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 57"},
-        {"name": "Беллуччи", "category": "Ресторан", "budget_per_person": 1000, "rating": 4.7, "tags": ["вино", "ужин", "панорама"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 139"},
-        {"name": "Joy", "category": "Ресторан", "budget_per_person": 4300, "rating": 4.2, "tags": ["свидание", "мясо", "вино"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 112"},
-        {"name": "Schneider", "category": "Ресторан", "budget_per_person": 3500, "rating": 4.1, "tags": ["ужин", "панорама", "мясо"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 125"},
-        {"name": "Макао", "category": "Ресторан", "budget_per_person": 1700, "rating": 4.2, "tags": ["панорама", "ужин", "мясо"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 25"},
-        {"name": "Матадор", "category": "Ресторан", "budget_per_person": 2500, "rating": 4.1, "tags": ["свидание", "панорама", "мясо"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 101"},
-        {"name": "Кинза", "category": "Ресторан", "budget_per_person": 4300, "rating": 4.0, "tags": ["вино", "панорама", "дорого"], "address": "г. Ростов-на-Дону, ул. Суворова, 56"},
-        {"name": "Пинта", "category": "Ресторан", "budget_per_person": 2200, "rating": 4.3, "tags": ["дорого", "свидание", "ужин"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 100"},
-        {"name": "Гридневъ", "category": "Ресторан", "budget_per_person": 2600, "rating": 4.3, "tags": ["дорого", "вино", "вкусно"], "address": "г. Ростов-на-Дону, ул. Суворова, 127"},
-        {"name": "Рис", "category": "Ресторан", "budget_per_person": 4200, "rating": 4.3, "tags": ["панорама", "мясо", "вино"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 146"},
-        {"name": "Тамада", "category": "Ресторан", "budget_per_person": 3400, "rating": 4.6, "tags": ["панорама", "вино", "мясо"], "address": "г. Ростов-на-Дону, ул. Соколова, 150"},
-        {"name": "Казачий Курень", "category": "Ресторан", "budget_per_person": 1500, "rating": 4.5, "tags": ["панорама", "мясо", "вино"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 90"},
-        {"name": "Голодранец", "category": "Бар", "budget_per_person": 2800, "rating": 4.6, "tags": ["коктейли", "вечер", "крафт"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 55"},
-        {"name": "Бокальчик", "category": "Бар", "budget_per_person": 1700, "rating": 4.3, "tags": ["вечеринка", "коктейли", "алкоголь"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 38"},
-        {"name": "Сияние", "category": "Бар", "budget_per_person": 2100, "rating": 4.1, "tags": ["вечеринка", "коктейли", "танцы"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 116"},
-        {"name": "Shanghai 12", "category": "Бар", "budget_per_person": 1400, "rating": 4.3, "tags": ["алкоголь", "музыка", "коктейли"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 104"},
-        {"name": "Молодость", "category": "Бар", "budget_per_person": 2600, "rating": 4.8, "tags": ["коктейли", "танцы", "алкоголь"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 107"},
-        {"name": "Квадрат", "category": "Бар", "budget_per_person": 1500, "rating": 4.8, "tags": ["танцы", "коктейли", "музыка"], "address": "г. Ростов-на-Дону, ул. Соколова, 81"},
-        {"name": "Свое Место", "category": "Бар", "budget_per_person": 2400, "rating": 4.5, "tags": ["крафт", "шумно", "вечер"], "address": "г. Ростов-на-Дону, ул. Соколова, 48"},
-        {"name": "O.W. Grant", "category": "Бар", "budget_per_person": 2500, "rating": 4.8, "tags": ["алкоголь", "коктейли", "вечер"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 140"},
-        {"name": "Буковски", "category": "Бар", "budget_per_person": 800, "rating": 4.2, "tags": ["музыка", "танцы", "вечеринка"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 51"},
-        {"name": "Abbey Road", "category": "Бар", "budget_per_person": 2200, "rating": 4.9, "tags": ["коктейли", "шумно", "крафт"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 72"},
-        {"name": "Harat's Pub", "category": "Бар", "budget_per_person": 2100, "rating": 4.3, "tags": ["коктейли", "шумно", "танцы"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 1"},
-        {"name": "Mojo", "category": "Бар", "budget_per_person": 1200, "rating": 4.1, "tags": ["музыка", "вечер", "коктейли"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 46"},
-        {"name": "Jungle", "category": "Бар", "budget_per_person": 1900, "rating": 4.8, "tags": ["алкоголь", "танцы", "шумно"], "address": "г. Ростов-на-Дону, ул. Соколова, 15"},
-        {"name": "Циферблат", "category": "Развлечения", "budget_per_person": 800, "rating": 4.3, "tags": ["активный отдых", "кино", "аттракционы"], "address": "г. Ростов-на-Дону, ул. Суворова, 138"},
-        {"name": "Некафе", "category": "Развлечения", "budget_per_person": 900, "rating": 4.7, "tags": ["свидание", "квест", "аттракционы"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 54"},
-        {"name": "КиноМакс", "category": "Развлечения", "budget_per_person": 2300, "rating": 4.5, "tags": ["игры", "свидание", "активный отдых"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 79"},
-        {"name": "Горизонт Cinema", "category": "Развлечения", "budget_per_person": 1200, "rating": 4.6, "tags": ["активный отдых", "квест", "кино"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 56"},
-        {"name": "Квест-центр 'Изоляция'", "category": "Развлечения", "budget_per_person": 2200, "rating": 4.1, "tags": ["квест", "животные", "свидание"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 130"},
-        {"name": "Парк Революции", "category": "Развлечения", "budget_per_person": 700, "rating": 5.0, "tags": ["квест", "активный отдых", "аттракционы"], "address": "г. Ростов-на-Дону, ул. Суворова, 48"},
-        {"name": "Аквапарк H2O", "category": "Развлечения", "budget_per_person": 2000, "rating": 4.9, "tags": ["аттракционы", "квест", "семья"], "address": "г. Ростов-на-Дону, ул. Суворова, 106"},
-        {"name": "Ростовский Зоопарк", "category": "Развлечения", "budget_per_person": 2300, "rating": 4.8, "tags": ["кино", "свидание", "активный отдых"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 2"},
-        {"name": "Батутный парк 'Кенгуру'", "category": "Развлечения", "budget_per_person": 1500, "rating": 4.7, "tags": ["игры", "семья", "животные"], "address": "г. Ростов-на-Дону, ул. Суворова, 100"},
-        {"name": "Клуб 'Мёд'", "category": "Развлечения", "budget_per_person": 2100, "rating": 4.9, "tags": ["животные", "кино", "квест"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 130"},
-        {"name": "Квест 'Выход'", "category": "Развлечения", "budget_per_person": 2200, "rating": 4.7, "tags": ["кино", "животные", "семья"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 118"},
-        {"name": "Студия 'Титаник'", "category": "Развлечения", "budget_per_person": 2400, "rating": 4.3, "tags": ["аттракционы", "кино", "свидание"], "address": "г. Ростов-на-Дону, ул. Максима Горького, 67"},
-        {"name": "Парк Горького", "category": "Развлечения", "budget_per_person": 800, "rating": 4.7, "tags": ["квест", "кино", "животные"], "address": "г. Ростов-на-Дону, ул. Соколова, 63"},
-        {"name": "Секретное место #1", "category": "Необычные места", "budget_per_person": 1800, "rating": 4.6, "tags": ["друзья", "отдых", "прогулка"], "address": "г. Ростов-на-Дону, ул. Соколова, 130"},
-        {"name": "Секретное место #2", "category": "Необычные места", "budget_per_person": 1500, "rating": 4.9, "tags": ["арт-пространство", "недорого", "друзья"], "address": "г. Ростов-на-Дону, ул. Суворова, 55"},
-        {"name": "Секретное место #3", "category": "Необычные места", "budget_per_person": 1300, "rating": 4.4, "tags": ["арт-пространство", "прогулка", "отдых"], "address": "г. Ростов-на-Дону, ул. Суворова, 139"},
-        {"name": "Секретное место #4", "category": "Необычные места", "budget_per_person": 1800, "rating": 4.7, "tags": ["арт-пространство", "друзья", "отдых"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 33"},
-        {"name": "Секретное место #5", "category": "Необычные места", "budget_per_person": 1100, "rating": 4.0, "tags": ["отдых", "свидание", "недорого"], "address": "г. Ростов-на-Дону, ул. Суворова, 70"},
-        {"name": "Секретное место #6", "category": "Необычные места", "budget_per_person": 1500, "rating": 4.4, "tags": ["отдых", "друзья", "недорого"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 27"},
-        {"name": "Секретное место #7", "category": "Необычные места", "budget_per_person": 700, "rating": 4.4, "tags": ["отдых", "друзья", "прогулка"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 29"},
-        {"name": "Секретное место #8", "category": "Необычные места", "budget_per_person": 600, "rating": 4.3, "tags": ["друзья", "свидание", "недорого"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 89"},
-        {"name": "Секретное место #9", "category": "Необычные места", "budget_per_person": 1600, "rating": 4.7, "tags": ["свидание", "недорого", "друзья"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 142"},
-        {"name": "Секретное место #10", "category": "Необычные места", "budget_per_person": 1900, "rating": 4.8, "tags": ["прогулка", "отдых", "недорого"], "address": "г. Ростов-на-Дону, ул. Соколова, 131"},
-        {"name": "Секретное место #11", "category": "Необычные места", "budget_per_person": 600, "rating": 4.2, "tags": ["свидание", "прогулка", "отдых"], "address": "г. Ростов-на-Дону, ул. Суворова, 86"},
-        {"name": "Секретное место #12", "category": "Необычные места", "budget_per_person": 500, "rating": 4.8, "tags": ["отдых", "свидание", "арт-пространство"], "address": "г. Ростов-на-Дону, ул. Большая Садовая, 63"}
-    ];
+        {"name": "Бутерброд", "category": "Кафе/<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VibeWalk — ИИ-проводник по Ростову-на-Дону</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-navy: #12212E;
+            --deep-teal: #307082;
+            --muted-teal: #6CA3A2;
+            --cream: #ECE7DC;
+            --orange: #EA9940;
+            --white: #FFFFFF;
+            --card-shadow: 0 6px 18px rgba(18, 33, 46, 0.08);
+        }
 
-    let guestsCount = 2;
-    const chatWindow = document.getElementById('chat-window');
-    const chatInput = document.getElementById('chat-input');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-    function changeGuests(delta) {
-        guestsCount = Math.max(1, Math.min(15, guestsCount + delta));
-        document.getElementById('guest-count').innerText = guestsCount;
-        document.getElementById('book-guests').value = guestsCount;
-    }
+        body {
+            background: linear-gradient(135deg, var(--dark-navy) 0%, #1d3549 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* ИСПОЛЬЗУЕМ ДИНАМИЧЕСКУЮ ВЫСОТУ ДЛЯ ТЕЛЕФОНОВ (100dvh) */
+            height: 100dvh;
+            overflow: hidden; /* Блокируем скролл всей страницы */
+            color: var(--dark-navy);
+        }
 
-    function switchTab(tabId, btnEl) {
-        document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-        document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
-        document.getElementById('view-' + tabId).classList.add('active');
-        btnEl.classList.add('active');
-        if (tabId === 'catalog') renderCatalog('Все');
-    }
+        #app {
+            width: 100%;
+            max-width: 460px;
+            height: 100dvh;
+            background-color: var(--cream);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        }
 
-    function quickAsk(text) {
-        chatInput.value = text;
-        sendUserMessage();
-    }
+        @media (min-width: 500px) {
+            #app {
+                height: 94vh;
+                border-radius: 28px;
+                border: 6px solid #243b4f;
+            }
+        }
 
-    function sendUserMessage() {
-        const text = chatInput.value.trim();
-        if (!text) return;
+        header {
+            background-color: var(--dark-navy);
+            color: var(--cream);
+            padding: 14px 18px 10px;
+            z-index: 20;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
 
-        chatWindow.innerHTML += `
-            <div class="msg-row user">
-                <div class="bubble user">${text}</div>
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-svg {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .brand-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            line-height: 1.1;
+        }
+
+        .brand-title span {
+            color: var(--orange);
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            color: var(--muted-teal);
+            font-weight: 600;
+        }
+
+        .guest-selector {
+            display: flex;
+            align-items: center;
+            background-color: rgba(48, 112, 130, 0.35);
+            border: 1px solid var(--muted-teal);
+            border-radius: 20px;
+            padding: 4px 10px;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .guest-btn {
+            background: var(--orange);
+            color: var(--dark-navy);
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 6px;
+            background-color: rgba(255,255,255,0.06);
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .nav-tab {
+            flex: 1;
+            text-align: center;
+            padding: 7px 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--cream);
+            background: transparent;
+            border: none;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .nav-tab.active {
+            background-color: var(--orange);
+            color: var(--dark-navy);
+        }
+
+        .view-section {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+            /* ФИКС ОБРЕЗКИ: не дает чату выталкивать меню вниз */
+            min-height: 0; 
+        }
+
+        .view-section.active {
+            display: flex;
+        }
+
+        .quick-chips {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            overflow-x: auto;
+            background-color: rgba(108, 163, 162, 0.15);
+            border-bottom: 1px solid rgba(48, 112, 130, 0.15);
+            scrollbar-width: none;
+        }
+        .quick-chips::-webkit-scrollbar { display: none; }
+
+        .chip {
+            white-space: nowrap;
+            background-color: var(--white);
+            color: var(--dark-navy);
+            border: 1.5px solid var(--muted-teal);
+            padding: 6px 12px;
+            border-radius: 18px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+
+        .chip:hover, .chip:active {
+            background-color: var(--deep-teal);
+            color: var(--white);
+            border-color: var(--deep-teal);
+        }
+
+        #chat-window {
+            flex: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            scroll-behavior: smooth;
+        }
+
+        .msg-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg-row.user {
+            justify-content: flex-end;
+        }
+
+        .bot-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        }
+
+        .bubble {
+            max-width: 85%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.45;
+        }
+
+        .bubble.bot {
+            background-color: var(--white);
+            color: var(--dark-navy);
+            border-bottom-left-radius: 4px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .bubble.user {
+            background-color: var(--deep-teal);
+            color: var(--white);
+            border-bottom-right-radius: 4px;
+            font-weight: 600;
+        }
+
+        .walk-summary {
+            background: linear-gradient(135deg, var(--dark-navy), var(--deep-teal));
+            color: var(--cream);
+            padding: 10px 12px;
+            border-radius: 12px;
+            margin: 10px 0;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .walk-summary-title {
+            color: var(--orange);
+            font-weight: 800;
+            font-size: 13px;
+        }
+
+        .cards-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .place-card {
+            background-color: var(--cream);
+            border-radius: 14px;
+            padding: 12px;
+            border-left: 5px solid var(--deep-teal);
+            position: relative;
+            transition: transform 0.15s;
+        }
+
+        .place-card.sponsor {
+            border-left-color: var(--orange);
+            background: linear-gradient(to right, #fff8ef, var(--cream));
+        }
+
+        .badge-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .cat-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--deep-teal);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sponsor-badge {
+            background-color: var(--orange);
+            color: var(--dark-navy);
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .step-badge {
+            background-color: var(--dark-navy);
+            color: var(--orange);
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .place-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--dark-navy);
+            margin-bottom: 4px;
+        }
+
+        .place-metrics {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--dark-navy);
+            margin-bottom: 6px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .place-metrics span.total-price {
+            color: var(--deep-teal);
+        }
+
+        .tags-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            background-color: var(--muted-teal);
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 8px;
+        }
+
+        .place-addr {
+            font-size: 12px;
+            color: #4a5c6a;
+            margin-bottom: 8px;
+        }
+
+        .ai-reason {
+            font-size: 11.5px;
+            background-color: rgba(255,255,255,0.7);
+            padding: 6px 8px;
+            border-radius: 8px;
+            color: var(--dark-navy);
+            margin-bottom: 8px;
+            border-left: 2px solid var(--orange);
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .btn-book, .btn-route {
+            flex: 1;
+            border: none;
+            padding: 8px 10px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-book {
+            background-color: var(--orange);
+            color: var(--dark-navy);
+        }
+
+        .btn-route {
+            background-color: var(--muted-teal);
+            color: var(--white);
+        }
+
+        .btn-book:hover, .btn-route:hover {
+            filter: brightness(1.05);
+        }
+
+        .btn-share-poll {
+            margin-top: 10px;
+            width: 100%;
+            background-color: var(--deep-teal);
+            color: var(--white);
+            border: none;
+            padding: 9px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        /* НОВЫЙ ДИЗАЙН ПАРЯЩЕЙ ПАНЕЛИ ВВОДА (ОРГАНИЧНЫЙ) */
+        .input-bar {
+            display: flex;
+            padding: 10px 16px 26px; /* Отступ снизу для "Safe Area" на телефонах */
+            background: linear-gradient(to top, var(--cream) 70%, rgba(236, 231, 220, 0)); /* Плавное растворение фона */
+            gap: 10px;
+            align-items: center;
+            border-top: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 26px; /* Форма капсулы */
+            background-color: var(--white);
+            color: var(--dark-navy);
+            font-size: 14.5px;
+            font-weight: 600;
+            outline: none;
+            box-shadow: 0 6px 16px rgba(18, 33, 46, 0.07); /* Мягкая парящая тень */
+            transition: box-shadow 0.3s;
+        }
+
+        #chat-input:focus {
+            box-shadow: 0 8px 24px rgba(48, 112, 130, 0.15); /* Подсветка при клике */
+        }
+
+        #send-btn {
+            background-color: var(--orange);
+            color: var(--dark-navy);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 0 6px 14px rgba(234, 153, 64, 0.35); /* Цветная тень кнопки */
+            transition: transform 0.2s;
+        }
+
+        #send-btn:active {
+            transform: scale(0.92); /* Анимация нажатия */
+        }
+
+        .tours-container, .catalog-container {
+            padding: 16px;
+            overflow-y: auto;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .tour-preset-card {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 16px;
+            box-shadow: var(--card-shadow);
+            border-top: 4px solid var(--orange);
+        }
+
+        .tour-preset-card h3 {
+            font-size: 17px;
+            margin-bottom: 6px;
+            color: var(--dark-navy);
+        }
+
+        .tour-preset-card p {
+            font-size: 13px;
+            color: #4a5c6a;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            flex-shrink: 0;
+        }
+
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(18, 33, 46, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background-color: var(--cream);
+            width: 100%;
+            max-width: 360px;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+            border: 2px solid var(--orange);
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--dark-navy);
+        }
+
+        .modal-sub {
+            font-size: 13px;
+            color: var(--deep-teal);
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1.5px solid var(--muted-teal);
+            background-color: var(--white);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .btn-cancel {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1.5px solid var(--dark-navy);
+            background: transparent;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-confirm {
+            flex: 1.5;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: var(--orange);
+            color: var(--dark-navy);
+            font-weight: 800;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<svg style="display:none;">
+    <symbol id="vibewalk-wolf" viewBox="0 0 120 120">
+        <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#195363"/>
+                <stop offset="100%" stop-color="#307082"/>
+            </linearGradient>
+            <linearGradient id="wolfGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#EA9940"/>
+                <stop offset="55%" stop-color="#f3be7a"/>
+                <stop offset="100%" stop-color="#ECE7DC"/>
+            </linearGradient>
+        </defs>
+        <rect width="120" height="120" rx="26" fill="url(#skyGrad)"/>
+        <polygon points="24,14 26,20 32,22 26,24 24,30 22,24 16,22 22,20" fill="#EA9940"/>
+        <polygon points="56,12 57.5,16 62,17.5 57.5,19 56,23 54.5,19 50,17.5 54.5,16" fill="#6CA3A2"/>
+        <polygon points="98,28 99.5,32 104,33.5 99.5,35 98,39 96.5,35 92,33.5 96.5,32" fill="#ECE7DC"/>
+        <circle cx="88" cy="18" r="2" fill="#ECE7DC"/>
+        <polygon points="0,78 22,48 48,72 62,40 88,68 104,46 120,74 120,120 0,120" fill="#183b49"/>
+        <rect y="74" width="120" height="46" fill="#12212E"/>
+        <path d="M 42,120 C 56,105 92,98 86,82 C 82,74 68,74 62,74 L 74,74 C 88,76 104,84 96,102 C 90,114 78,120 72,120 Z" fill="#6CA3A2"/>
+        <path d="M 32,74 C 25,74 20,79 20,86 C 20,95 32,106 32,106 C 32,106 44,95 44,86 C 44,79 39,74 32,74 Z" fill="#6CA3A2"/>
+        <circle cx="32" cy="85" r="5" fill="#12212E"/>
+        <path d="M 28,36 L 38,18 L 48,36" fill="none" stroke="#EA9940" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 72,36 L 82,18 L 92,36" fill="none" stroke="#EA9940" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M 26,42 L 45,42 C 47,42 49,44 50,47 L 60,78 L 70,47 C 71,44 73,42 75,42 L 94,42 L 66,98 C 63,103 57,103 54,98 Z" fill="url(#wolfGrad)"/>
+        <circle cx="47" cy="60" r="3.6" fill="#12212E"/>
+        <circle cx="73" cy="60" r="3.6" fill="#12212E"/>
+        <polygon points="55,91 65,91 60,99" fill="#12212E"/>
+    </symbol>
+</svg>
+
+<div id="app">
+    <header>
+        <div class="header-top">
+            <div class="brand">
+                <svg class="logo-svg"><use href="#vibewalk-wolf"></use></svg>
+                <div>
+                    <div class="brand-title">Vibe<span>Walk</span></div>
+                    <div class="brand-subtitle">Ростов-на-Дону • ИИ-гид</div>
+                </div>
             </div>
-        `;
-        chatInput.value = '';
-        chatWindow.scrollTop = chatWindow.scrollHeight;
+            <div class="guest-selector" title="Количество человек для расчета чека">
+                <span>👥 Гостей:</span>
+                <button class="guest-btn" onclick="changeGuests(-1)">−</button>
+                <span id="guest-count">2</span>
+                <button class="guest-btn" onclick="changeGuests(1)">+</button>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="switchTab('chat', this)">💬 ИИ-Подбор</button>
+            <button class="nav-tab" onclick="switchTab('tours', this)">🗺️ Маршруты</button>
+            <button class="nav-tab" onclick="switchTab('catalog', this)">📚 База (75)</button>
+        </div>
+    </header>
 
-        setTimeout(() => {
-            analyzeAndRespond(text);
-        }, 450);
-    }
+    <div id="view-chat" class="view-section active">
+        <div class="quick-chips">
+            <button class="chip" onclick="quickAsk('Нас трое, хотим посидеть в необычном месте, общий бюджет до 4500 рублей')">✨ Необычное место</button>
+            <button class="chip" onclick="buildThematicRoute('Гастротур')">🍽️ Собрать Гастротур</button>
+            <button class="chip" onclick="buildThematicRoute('Романтический вечер')">❤️ Свидание (Маршрут)</button>
+            <button class="chip" onclick="quickAsk('Хотим недорого выпить кофе и десерты до 700 рублей в тихом месте')">☕ Уютная кофейня</button>
+            <button class="chip" onclick="buildThematicRoute('Барный маршрут')">🍹 Барный тур</button>
+            <button class="chip" onclick="quickAsk('Куда сходить компанией на квест или активный отдых?')">🎲 Активный отдых</button>
+        </div>
 
-    function analyzeAndRespond(rawText) {
-        const q = rawText.toLowerCase();
-
-        if (q.includes('один') || q.includes('одна') || q.includes('самому')) changeGuests(1 - guestsCount);
-        else if (q.includes('вдвоем') || q.includes('двое') || q.includes('свидан')) changeGuests(2 - guestsCount);
-        else if (q.includes('трое') || q.includes('втроем') || q.includes('нас 3')) changeGuests(3 - guestsCount);
-        else if (q.includes('четверо') || q.includes('вчетвером') || q.includes('нас 4')) changeGuests(4 - guestsCount);
-        else if (q.includes('компан') && guestsCount < 3) changeGuests(4 - guestsCount);
-
-        if (q.includes('гастротур')) return buildThematicRoute('Гастротур');
-        if (q.includes('барный тур') || q.includes('барный маршрут')) return buildThematicRoute('Барный маршрут');
-        if (q.includes('маршрут') || q.includes('тур ')) return buildThematicRoute('Романтический вечер');
-
-        let maxBudgetPerPerson = 10000;
-        const numMatch = q.match(/(\d{3,5})/);
-        if (numMatch) {
-            const parsedSum = parseInt(numMatch[1], 10);
-            if (q.includes('на человека') || q.includes('с человека')) {
-                maxBudgetPerPerson = parsedSum;
-            } else if (guestsCount > 1 && parsedSum >= 1500) {
-                maxBudgetPerPerson = Math.round(parsedSum / guestsCount);
-            } else {
-                maxBudgetPerPerson = parsedSum;
-            }
-        } else if (q.includes('недорог') || q.includes('дешев') || q.includes('бюджетн')) {
-            maxBudgetPerPerson = 1000;
-        }
-
-        const scored = placesDB.map(place => {
-            let score = 0;
-            let reasons = [];
-
-            if (place.budget_per_person <= maxBudgetPerPerson) {
-                score += 3;
-            } else {
-                score -= 5;
-            }
-
-            if ((q.includes('кофе') || q.includes('кафе') || q.includes('завтрак') || q.includes('десерт')) && place.category === 'Кафе/Кофейня') {
-                score += 5; reasons.push('подходит для кофе и десертов');
-            }
-            if ((q.includes('ресторан') || q.includes('ужин') || q.includes('поесть') || q.includes('мяс') || q.includes('вин')) && place.category === 'Ресторан') {
-                score += 5; reasons.push('отличная кухня для ужина');
-            }
-            if ((q.includes('бар') || q.includes('выпить') || q.includes('коктейл') || q.includes('танц') || q.includes('крафт')) && place.category === 'Бар') {
-                score += 5; reasons.push('атмосферный барный формат');
-            }
-            if ((q.includes('квест') || q.includes('кино') || q.includes('активн') || q.includes('развлеч') || q.includes('парк')) && place.category === 'Развлечения') {
-                score += 5; reasons.push('активный формат досуга');
-            }
-            if ((q.includes('необычн') || q.includes('секрет') || q.includes('арт') || q.includes('новое')) && place.category === 'Необычные места') {
-                score += 6; reasons.push('нешаблонная секретная локация');
-            }
-
-            place.tags.forEach(t => {
-                if (q.includes(t.slice(0, 4))) {
-                    score += 3;
-                    reasons.push(`тег «${t}»`);
-                }
-            });
-
-            if (q.includes('тих') || q.includes('не слишком шумно') || q.includes('уют')) {
-                if (place.tags.includes('тихо') || place.tags.includes('уютно')) {
-                    score += 4; reasons.push('спокойная атмосфера без лишнего шума');
-                }
-                if (place.tags.includes('шумно')) score -= 4;
-            }
-
-            return { ...place, score, reasonText: reasons.length ? reasons.join(', ') : 'высокий рейтинг и соответствие вашему бюджету' };
-        });
-
-        let results = scored.filter(p => p.score > 0).sort((a, b) => b.score - a.score || b.rating - a.rating).slice(0, 3);
-        if (results.length === 0) {
-            results = scored.sort((a, b) => b.rating - a.rating).slice(0, 3);
-        }
-
-        renderBotCards(results, `Я проанализировал базу Ростова-на-Дону для компании из <b>${guestsCount} чел.</b> (лимит ~${maxBudgetPerPerson < 9000 ? maxBudgetPerPerson + ' ₽/чел.' : 'без ограничений'}) и подобрал лучшие варианты:`, false);
-    }
-
-    function buildThematicRoute(type) {
-        let step1, step2, step3, title;
-
-        if (type === 'Гастротур') {
-            title = '🗺️ Маршрут «Гастротур по Ростову»';
-            step1 = placesDB.find(p => p.name === 'Гаврош') || placesDB[0];
-            step2 = placesDB.find(p => p.name === 'Leo Wine & Kitchen') || placesDB[16];
-            step3 = placesDB.find(p => p.name === 'Голодранец') || placesDB[37];
-        } else if (type === 'Романтический вечер') {
-            title = '❤️ Маршрут «Романтический вечер»';
-            step1 = placesDB.find(p => p.name === 'Секретное место #12') || placesDB[74];
-            step2 = placesDB.find(p => p.name === 'Беллуччи') || placesDB[26];
-            step3 = placesDB.find(p => p.name === 'CUP by CUP') || placesDB[9];
-        } else if (type === 'Барный маршрут') {
-            title = '🍹 Маршрут «Барный тур по центру»';
-            step1 = placesDB.find(p => p.name === 'Свое Место') || placesDB[43];
-            step2 = placesDB.find(p => p.name === 'Shanghai 12') || placesDB[40];
-            step3 = placesDB.find(p => p.name === 'Молодость') || placesDB[41];
-        } else {
-            title = '🎭 Маршрут «Культурный вечер»';
-            step1 = placesDB.find(p => p.name === 'Секретное место #2') || placesDB[64];
-            step2 = placesDB.find(p => p.name === 'Горизонт Cinema') || placesDB[53];
-            step3 = placesDB.find(p => p.name === 'Казачий Курень') || placesDB[36];
-        }
-
-        const routeSteps = [
-            { ...step1, stepTitle: 'Точка 1 • Старт прогулки', reasonText: 'Начало маршрута в центре города' },
-            { ...step2, stepTitle: 'Точка 2 • Основная программа', reasonText: 'В 10 минутах пешком от первой локации' },
-            { ...step3, stepTitle: 'Точка 3 • Финал вечера', reasonText: 'Атмосферное завершение маршрута' }
-        ];
-
-        renderBotCards(routeSteps, `Готов персональный план отдыха: <b>${title}</b>. Все локации подобраны с учетом логистики и времени работы:`, true);
-    }
-
-    function renderBotCards(items, introHtml, isRoute) {
-        const sumPerPerson = items.reduce((acc, it) => acc + it.budget_per_person, 0);
-        const totalForGroup = sumPerPerson * guestsCount;
-
-        let summaryHtml = '';
-        if (isRoute) {
-            summaryHtml = `
-                <div class="walk-summary">
-                    <div class="walk-summary-title">📊 Расчет стоимости всего маршрута (3 локации):</div>
-                    <div>• На 1 человека: <b>${sumPerPerson} ₽</b></div>
-                    <div>• На всю компанию (${guestsCount} чел.): <b>${totalForGroup} ₽</b></div>
-                </div>
-            `;
-        }
-
-        const cardsHtml = items.map((item, idx) => {
-            const isSponsor = !isRoute && idx === 0;
-            const groupCost = item.budget_per_person * guestsCount;
-            const tagsHtml = item.tags.map(t => `<span class="tag">#${t}</span>`).join('');
-            
-            // Диплинк маршрут для Яндекс.Карт
-            const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(item.address)}`;
-
-            return `
-                <div class="place-card ${isSponsor ? 'sponsor' : ''}">
-                    <div class="badge-row">
-                        <span class="cat-label">${item.category}</span>
-                        ${isRoute ? `<span class="step-badge">${item.stepTitle}</span>` : ''}
-                        ${isSponsor ? `<span class="sponsor-badge">Партнер VibeWalk</span>` : ''}
-                    </div>
-                    <div class="place-name">${item.name}</div>
-                    <div class="place-metrics">
-                        <span>⭐ ${item.rating}</span>
-                        <span>👤 ${item.budget_per_person} ₽/чел.</span>
-                        <span class="total-price">👥 Итого на ${guestsCount} чел.: ${groupCost} ₽</span>
-                    </div>
-                    <div class="tags-wrap">${tagsHtml}</div>
-                    <div class="ai-reason">🤖 <b>Почему подходит:</b> ${item.reasonText}${isSponsor ? ' • Скидка 10% по промокоду VIBE' : ''}</div>
-                    <div class="place-addr">📍 ${item.address}</div>
-                    <div class="card-actions">
-                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.address}')">📅 Забронь</button>
-                        <a href="${mapLink}" target="_blank" class="btn-route">🗺️ Маршрут</a>
-                    </div>
-                </div>
-            `;
-        }).join('');
-
-        chatWindow.innerHTML += `
+        <div id="chat-window">
             <div class="msg-row bot">
                 <svg class="bot-avatar"><use href="#vibewalk-wolf"></use></svg>
                 <div class="bubble bot">
-                    ${introHtml}
-                    ${summaryHtml}
-                    <div class="cards-list">${cardsHtml}</div>
-                    <button class="btn-share-poll" onclick="sharePoll(this)">🔗 Отправить подборку друзьям на голосование</button>
+                    Привет! Я <b>Волчок</b> — твой ИИ-проводник по Ростову-на-Дону 🐾<br><br>
+                    Опиши в свободной форме, как хочешь провести время: укажи <b>компанию, бюджет, кухню или настроение</b>. Я мгновенно проанализирую 75 локаций города, посчитаю бюджет прогулки или соберу готовый маршрут!
                 </div>
             </div>
-        `;
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
+        </div>
 
-    function renderCatalog(categoryFilter) {
-        const listEl = document.getElementById('catalog-list');
-        const filtered = categoryFilter === 'Все' ? placesDB : placesDB.filter(p => p.category === categoryFilter);
+        <div class="input-bar">
+            <input type="text" id="chat-input" placeholder="Введите ваш запрос..." onkeypress="if(event.key==='Enter') sendUserMessage()">
+            <button id="send-btn" onclick="sendUserMessage()">➤</button>
+        </div>
+    </div>
 
-        listEl.innerHTML = filtered.map(item => {
-            const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(item.address)}`;
-            
-            return `
-                <div class="place-card" style="background-color: var(--white);">
-                    <div class="badge-row">
-                        <span class="cat-label">${item.category}</span>
-                        <span>⭐ <b>${item.rating}</b></span>
-                    </div>
-                    <div class="place-name">${item.name}</div>
-                    <div class="place-metrics">
-                        <span>Средний чек: ${item.budget_per_person} ₽/чел.</span>
-                    </div>
-                    <div class="tags-wrap">${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
-                    <div class="place-addr">📍 ${item.address}</div>
-                    <div class="card-actions">
-                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.address}')">📅 Бронь</button>
-                        <a href="${mapLink}" target="_blank" class="btn-route">🗺️ Маршрут</a>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
-    function openBookingModal(name, addr) {
-        document.getElementById('modal-place-name').innerText = name;
-        document.getElementById('modal-place-info').innerText = addr;
-        document.getElementById('book-guests').value = guestsCount;
-        document.getElementById('booking-modal').classList.add('active');
-    }
-
-    function closeBookingModal() {
-        document.getElementById('booking-modal').classList.remove('active');
-    }
-
-    function confirmBooking() {
-        const place = document.getElementById('modal-place-name').innerText;
-        const g = document.getElementById('book-guests').value;
-        const t = document.getElementById('book-time').value;
-        closeBookingModal();
-
-        chatWindow.innerHTML += `
-            <div class="msg-row bot">
-                <svg class="bot-avatar"><use href="#vibewalk-wolf"></use></svg>
-                <div class="bubble bot">
-                    ✅ <b>Бронь подтверждена!</b><br>
-                    Заведение: <b>${place}</b><br>
-                    Гостей: ${g} чел. • Время: ${t}<br>
-                    <i>Партнерский купон VibeWalk закреплен за вашим номером.</i>
-                </div>
+    <div id="view-tours" class="view-section">
+        <div class="tours-container">
+            <div class="tour-preset-card">
+                <h3>🍽️ Гастрономический тур</h3>
+                <p>Последовательный маршрут из 3 заведений: утренний или дневной кофе с десертом, колоритный ужин в ресторане и завершение вечера в атмосферном коктейльном баре.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Гастротур');">Сгенерировать маршрут с ИИ</button>
             </div>
-        `;
-        chatWindow.scrollTop = chatWindow.scrollHeight;
-    }
+            <div class="tour-preset-card">
+                <h3>❤️ Романтический вечер</h3>
+                <p>Идеальный сценарий для свидания: прогулка или необычное арт-пространство, ужин с панорамным видом и вином, а также тихая кофейня.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Романтический вечер');">Сгенерировать маршрут с ИИ</button>
+            </div>
+            <div class="tour-preset-card">
+                <h3>🍹 Барный маршрут</h3>
+                <p>Насыщенный вечер для компании друзей: старт в крафтовом пабе, перемещение в коктейльный бар на Садовой и финал с музыкой и танцами.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Барный маршрут');">Сгенерировать маршрут с ИИ</button>
+            </div>
+            <div class="tour-preset-card">
+                <h3>🎭 Культурный вечер</h3>
+                <p>Сочетание развлекательных и культурных локаций Ростова с уютными гастрономическими местами поблизости.</p>
+                <button class="btn-book" onclick="switchTab('chat', document.querySelectorAll('.nav-tab')[0]); buildThematicRoute('Культурный вечер');">Сгенерировать маршрут с ИИ</button>
+            </div>
+        </div>
+    </div>
 
-    function sharePoll(btn) {
-        btn.innerText = '✅ Ссылка на голосование скопирована!';
-        btn.style.backgroundColor = '#EA9940';
-        btn.style.color = '#12212E';
-    }
-</script>
+    <div id="view-catalog" class="view-section">
+        <div class="catalog-container">
+            <div class="filter-bar">
+                <button class="chip" onclick="renderCatalog('Все')">Все (75)</button>
+                <button class="chip" onclick="renderCatalog('Кафе/Кофейня')">Кафе (15)</button>
+                <button class="chip" onclick="renderCatalog('Ресторан')">Рестораны (22)</button>
+                <button class="chip" onclick="renderCatalog('Бар')">Бары (13)</button>
+                <button class="chip" onclick="renderCatalog('Развлечения')">Развлечения (13)</button>
+                <button class="chip" onclick="renderCatalog('Необычные места')">Необычные (12)</button>
+            </div>
+            <div id="catalog-list" class="cards-list"></div>
+        </div>
+    </div>
 
-</body>
-</html>
+    <div id="booking-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-title" id="modal-place-name">Бронирование столика</div>
+            <div class="modal-sub" id="modal-place-info">Онлайн-бронь через VibeWalk</div>
+            <div class="form-group">
+                <label>Ваше имя</label>
+                <input type="text" id="book-name" placeholder="Введите имя" value="Виктор">
+            </div>
+            <div class="form-group">
+                <label>Количество гостей</label>
+                <input type="number" id="book-guests" min="1" max="20" value="2">
+            </div>
+            <div class="form-group">
+                <label>Время визита</label>
+                <select id="book-time">
+                    <option>Сегодня, 19:00</option>
+                    <option>Сегодня, 20:30</option>
+                    <option>Завтра, 18:00</option>
+                    <option>В выходные, 19:30</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeBookingModal()">Отмена</button>
+                <button class="btn-confirm" onclick="confirmBooking()">Подтвердить бронь</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-```
+<script>
+    const placesDB = [
+        {"name": "Сметана", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.4, "tags": ["уютно", "десерты", "тихо"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 97"},
+        {"name": "Питькофе", "category": "Кафе/Кофейня", "budget_per_person": 500, "rating": 4.2, "tags": ["завтрак", "работа", "быстро"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 96"},
+        {"name": "Золотой Колос", "category": "Кафе/Кофейня", "budget_per_person": 1000, "rating": 4.1, "tags": ["кофе", "завтрак", "десерты"], "address": "г. Ростов-на-Дону, ул. Соколова, 125"},
+        {"name": "Кекс", "category": "Кафе/Кофейня", "budget_per_person": 600, "rating": 4.4, "tags": ["завтрак", "кофе", "десерты"], "address": "г. Ростов-на-Дону, ул. Буденновский, 87"},
+        {"name": "Правда", "category": "Кафе/Кофейня", "budget_per_person": 900, "rating": 4.4, "tags": ["быстро", "тихо", "десерты"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 114"},
+        {"name": "Setters", "category": "Кафе/Кофейня", "budget_per_person": 300, "rating": 4.6, "tags": ["десерты", "быстро", "завтрак"], "address": "г. Ростов-на-Дону, ул. Красноармейская, 105"},
+        {"name": "Авокадо", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.1, "tags": ["быстро", "завтрак", "работа"], "address": "г. Ростов-на-Дону, ул. Пушкинская, 5"},
+        {"name": "Бутерброд", "category": "Кафе/
