@@ -1,3 +1,8 @@
+Вот полный обновленный код файла `index.html`. В него добавлены стили и кнопки для перехода в Яндекс.Карты (функции `renderBotCards` и `renderCatalog` изменены так, чтобы рядом с кнопкой бронирования формировалась автоматическая ссылка с адресом заведения).
+
+Скопируй этот код целиком и полностью замени им старый текст в редакторе GitHub.
+
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -33,7 +38,6 @@
             color: var(--dark-navy);
         }
 
-        /* Контейнер мобильного приложения */
         #app {
             width: 100%;
             max-width: 460px;
@@ -55,7 +59,6 @@
             }
         }
 
-        /* Шапка приложения */
         header {
             background-color: var(--dark-navy);
             color: var(--cream);
@@ -102,7 +105,6 @@
             font-weight: 600;
         }
 
-        /* Счетчик гостей */
         .guest-selector {
             display: flex;
             align-items: center;
@@ -130,7 +132,6 @@
             font-size: 14px;
         }
 
-        /* Навигационные вкладки */
         .nav-tabs {
             display: flex;
             gap: 6px;
@@ -158,7 +159,6 @@
             color: var(--dark-navy);
         }
 
-        /* Вкладки контента */
         .view-section {
             flex: 1;
             display: none;
@@ -170,7 +170,6 @@
             display: flex;
         }
 
-        /* Быстрые сценарии (Чипсы) */
         .quick-chips {
             display: flex;
             gap: 8px;
@@ -202,7 +201,6 @@
             border-color: var(--deep-teal);
         }
 
-        /* Окно чата */
         #chat-window {
             flex: 1;
             padding: 16px;
@@ -259,7 +257,6 @@
             font-weight: 600;
         }
 
-        /* Сводка прогулки (Калькулятор бюджета) */
         .walk-summary {
             background: linear-gradient(135deg, var(--dark-navy), var(--deep-teal));
             color: var(--cream);
@@ -278,7 +275,6 @@
             font-size: 13px;
         }
 
-        /* Карточки заведений */
         .cards-list {
             display: flex;
             flex-direction: column;
@@ -386,25 +382,40 @@
             border-left: 2px solid var(--orange);
         }
 
+        /* Обновленные стили кнопок действий в карточке */
         .card-actions {
             display: flex;
             gap: 6px;
+            margin-top: 8px;
         }
 
-        .btn-book {
+        .btn-book, .btn-route {
             flex: 1;
-            background-color: var(--orange);
-            color: var(--dark-navy);
             border: none;
             padding: 8px 10px;
             border-radius: 9px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
             cursor: pointer;
             transition: 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .btn-book:hover {
+        .btn-book {
+            background-color: var(--orange);
+            color: var(--dark-navy);
+        }
+
+        .btn-route {
+            background-color: var(--muted-teal);
+            color: var(--white);
+        }
+
+        .btn-book:hover, .btn-route:hover {
             filter: brightness(1.05);
         }
 
@@ -425,7 +436,6 @@
             gap: 6px;
         }
 
-        /* Зона ввода */
         .input-bar {
             display: flex;
             padding: 12px 14px;
@@ -467,7 +477,6 @@
             flex-shrink: 0;
         }
 
-        /* Вкладка Готовые туры */
         .tours-container, .catalog-container {
             padding: 16px;
             overflow-y: auto;
@@ -498,7 +507,6 @@
             line-height: 1.4;
         }
 
-        /* Вкладка Каталог базы */
         .filter-bar {
             display: flex;
             gap: 6px;
@@ -507,7 +515,6 @@
             flex-shrink: 0;
         }
 
-        /* Модальное окно бронирования */
         .modal-overlay {
             position: absolute;
             inset: 0;
@@ -598,7 +605,6 @@
 </head>
 <body>
 
-<!-- Шаблон SVG-логотипа Волчка VibeWalk -->
 <svg style="display:none;">
     <symbol id="vibewalk-wolf" viewBox="0 0 120 120">
         <defs>
@@ -612,28 +618,19 @@
                 <stop offset="100%" stop-color="#ECE7DC"/>
             </linearGradient>
         </defs>
-        <!-- Фон неба -->
         <rect width="120" height="120" rx="26" fill="url(#skyGrad)"/>
-        <!-- Звезды -->
         <polygon points="24,14 26,20 32,22 26,24 24,30 22,24 16,22 22,20" fill="#EA9940"/>
         <polygon points="56,12 57.5,16 62,17.5 57.5,19 56,23 54.5,19 50,17.5 54.5,16" fill="#6CA3A2"/>
         <polygon points="98,28 99.5,32 104,33.5 99.5,35 98,39 96.5,35 92,33.5 96.5,32" fill="#ECE7DC"/>
         <circle cx="88" cy="18" r="2" fill="#ECE7DC"/>
-        <!-- Горы -->
         <polygon points="0,78 22,48 48,72 62,40 88,68 104,46 120,74 120,120 0,120" fill="#183b49"/>
-        <!-- Земля -->
         <rect y="74" width="120" height="46" fill="#12212E"/>
-        <!-- Тропинка -->
         <path d="M 42,120 C 56,105 92,98 86,82 C 82,74 68,74 62,74 L 74,74 C 88,76 104,84 96,102 C 90,114 78,120 72,120 Z" fill="#6CA3A2"/>
-        <!-- Метка геолокации -->
         <path d="M 32,74 C 25,74 20,79 20,86 C 20,95 32,106 32,106 C 32,106 44,95 44,86 C 44,79 39,74 32,74 Z" fill="#6CA3A2"/>
         <circle cx="32" cy="85" r="5" fill="#12212E"/>
-        <!-- Уши волчка -->
         <path d="M 28,36 L 38,18 L 48,36" fill="none" stroke="#EA9940" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M 72,36 L 82,18 L 92,36" fill="none" stroke="#EA9940" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- Голова V-Волчка -->
         <path d="M 26,42 L 45,42 C 47,42 49,44 50,47 L 60,78 L 70,47 C 71,44 73,42 75,42 L 94,42 L 66,98 C 63,103 57,103 54,98 Z" fill="url(#wolfGrad)"/>
-        <!-- Глаза и нос -->
         <circle cx="47" cy="60" r="3.6" fill="#12212E"/>
         <circle cx="73" cy="60" r="3.6" fill="#12212E"/>
         <polygon points="55,91 65,91 60,99" fill="#12212E"/>
@@ -664,7 +661,6 @@
         </div>
     </header>
 
-    <!-- ВКЛАДКА 1: ЧАТ С ВОЛЧКОМ -->
     <div id="view-chat" class="view-section active">
         <div class="quick-chips">
             <button class="chip" onclick="quickAsk('Нас трое, хотим посидеть в необычном месте, общий бюджет до 4500 рублей')">✨ Необычное место</button>
@@ -691,7 +687,6 @@
         </div>
     </div>
 
-    <!-- ВКЛАДКА 2: ГОТОВЫЕ МАРШРУТЫ -->
     <div id="view-tours" class="view-section">
         <div class="tours-container">
             <div class="tour-preset-card">
@@ -717,7 +712,6 @@
         </div>
     </div>
 
-    <!-- ВКЛАДКА 3: КАТАЛОГ БАЗЫ (75 МЕСТ) -->
     <div id="view-catalog" class="view-section">
         <div class="catalog-container">
             <div class="filter-bar">
@@ -732,7 +726,6 @@
         </div>
     </div>
 
-    <!-- МОДАЛЬНОЕ ОКНО БРОНИРОВАНИЯ -->
     <div id="booking-modal" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-title" id="modal-place-name">Бронирование столика</div>
@@ -763,7 +756,6 @@
 </div>
 
 <script>
-    // Полная база из 75 заведений Ростова-на-Дону
     const placesDB = [
         {"name": "Сметана", "category": "Кафе/Кофейня", "budget_per_person": 800, "rating": 4.4, "tags": ["уютно", "десерты", "тихо"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 97"},
         {"name": "Питькофе", "category": "Кафе/Кофейня", "budget_per_person": 500, "rating": 4.2, "tags": ["завтрак", "работа", "быстро"], "address": "г. Ростов-на-Дону, ул. Ворошиловский, 96"},
@@ -882,23 +874,19 @@
         }, 450);
     }
 
-    // Имитация нейросетевого анализа текста
     function analyzeAndRespond(rawText) {
         const q = rawText.toLowerCase();
 
-        // 1. Определение количества человек из текста
         if (q.includes('один') || q.includes('одна') || q.includes('самому')) changeGuests(1 - guestsCount);
         else if (q.includes('вдвоем') || q.includes('двое') || q.includes('свидан')) changeGuests(2 - guestsCount);
         else if (q.includes('трое') || q.includes('втроем') || q.includes('нас 3')) changeGuests(3 - guestsCount);
         else if (q.includes('четверо') || q.includes('вчетвером') || q.includes('нас 4')) changeGuests(4 - guestsCount);
         else if (q.includes('компан') && guestsCount < 3) changeGuests(4 - guestsCount);
 
-        // Проверка на запрос маршрута/тура
         if (q.includes('гастротур')) return buildThematicRoute('Гастротур');
         if (q.includes('барный тур') || q.includes('барный маршрут')) return buildThematicRoute('Барный маршрут');
         if (q.includes('маршрут') || q.includes('тур ')) return buildThematicRoute('Романтический вечер');
 
-        // 2. Извлечение бюджета из запроса
         let maxBudgetPerPerson = 10000;
         const numMatch = q.match(/(\d{3,5})/);
         if (numMatch) {
@@ -906,7 +894,6 @@
             if (q.includes('на человека') || q.includes('с человека')) {
                 maxBudgetPerPerson = parsedSum;
             } else if (guestsCount > 1 && parsedSum >= 1500) {
-                // Если указан общий бюджет на компанию (например: нас трое, бюджет 5000)
                 maxBudgetPerPerson = Math.round(parsedSum / guestsCount);
             } else {
                 maxBudgetPerPerson = parsedSum;
@@ -915,7 +902,6 @@
             maxBudgetPerPerson = 1000;
         }
 
-        // 3. Скоринг всех 75 заведений
         const scored = placesDB.map(place => {
             let score = 0;
             let reasons = [];
@@ -942,7 +928,6 @@
                 score += 6; reasons.push('нешаблонная секретная локация');
             }
 
-            // Сопоставление по тегам
             place.tags.forEach(t => {
                 if (q.includes(t.slice(0, 4))) {
                     score += 3;
@@ -968,7 +953,6 @@
         renderBotCards(results, `Я проанализировал базу Ростова-на-Дону для компании из <b>${guestsCount} чел.</b> (лимит ~${maxBudgetPerPerson < 9000 ? maxBudgetPerPerson + ' ₽/чел.' : 'без ограничений'}) и подобрал лучшие варианты:`, false);
     }
 
-    // Генератор тематических маршрутов из 3 точек
     function buildThematicRoute(type) {
         let step1, step2, step3, title;
 
@@ -1022,6 +1006,9 @@
             const isSponsor = !isRoute && idx === 0;
             const groupCost = item.budget_per_person * guestsCount;
             const tagsHtml = item.tags.map(t => `<span class="tag">#${t}</span>`).join('');
+            
+            // Диплинк маршрут для Яндекс.Карт
+            const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(item.address)}`;
 
             return `
                 <div class="place-card ${isSponsor ? 'sponsor' : ''}">
@@ -1040,7 +1027,8 @@
                     <div class="ai-reason">🤖 <b>Почему подходит:</b> ${item.reasonText}${isSponsor ? ' • Скидка 10% по промокоду VIBE' : ''}</div>
                     <div class="place-addr">📍 ${item.address}</div>
                     <div class="card-actions">
-                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.address}')">📅 Забронировать столик</button>
+                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.address}')">📅 Забронь</button>
+                        <a href="${mapLink}" target="_blank" class="btn-route">🗺️ Маршрут</a>
                     </div>
                 </div>
             `;
@@ -1060,29 +1048,34 @@
         chatWindow.scrollTop = chatWindow.scrollHeight;
     }
 
-    // Отрисовка полного каталога из 75 мест
     function renderCatalog(categoryFilter) {
         const listEl = document.getElementById('catalog-list');
         const filtered = categoryFilter === 'Все' ? placesDB : placesDB.filter(p => p.category === categoryFilter);
 
-        listEl.innerHTML = filtered.map(item => `
-            <div class="place-card" style="background-color: var(--white);">
-                <div class="badge-row">
-                    <span class="cat-label">${item.category}</span>
-                    <span>⭐ <b>${item.rating}</b></span>
+        listEl.innerHTML = filtered.map(item => {
+            const mapLink = `https://yandex.ru/maps/?text=${encodeURIComponent(item.address)}`;
+            
+            return `
+                <div class="place-card" style="background-color: var(--white);">
+                    <div class="badge-row">
+                        <span class="cat-label">${item.category}</span>
+                        <span>⭐ <b>${item.rating}</b></span>
+                    </div>
+                    <div class="place-name">${item.name}</div>
+                    <div class="place-metrics">
+                        <span>Средний чек: ${item.budget_per_person} ₽/чел.</span>
+                    </div>
+                    <div class="tags-wrap">${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
+                    <div class="place-addr">📍 ${item.address}</div>
+                    <div class="card-actions">
+                        <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.address}')">📅 Бронь</button>
+                        <a href="${mapLink}" target="_blank" class="btn-route">🗺️ Маршрут</a>
+                    </div>
                 </div>
-                <div class="place-name">${item.name}</div>
-                <div class="place-metrics">
-                    <span>Средний чек: ${item.budget_per_person} ₽/чел.</span>
-                </div>
-                <div class="tags-wrap">${item.tags.map(t => `<span class="tag">#${t}</span>`).join('')}</div>
-                <div class="place-addr">📍 ${item.address}</div>
-                <button class="btn-book" onclick="openBookingModal('${item.name.replace(/'/g, "\\'")}', '${item.address}')">Забронировать</button>
-            </div>
-        `).join('');
+            `;
+        }).join('');
     }
 
-    // Модальное окно бронирования
     function openBookingModal(name, addr) {
         document.getElementById('modal-place-name').innerText = name;
         document.getElementById('modal-place-info').innerText = addr;
@@ -1123,3 +1116,5 @@
 
 </body>
 </html>
+
+```
